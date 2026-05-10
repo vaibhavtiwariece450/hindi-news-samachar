@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hindi News (SAMACHAR) - हिंदी न्यूज़ समाचार</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <span id="datetime"></span>
+    <span>📞 संपर्क: news@hindinewssamachar.in</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <h1>📺 Hindi News <span class="brand-sub">(SAMACHAR)</span></h1>
+      <p>सच की आवाज़, हर पल — हिंदी में</p>
+    </div>
+    <nav>
+      <a href="#home">होम</a>
+      <a href="#rashtriya">राष्ट्रीय</a>
+      <a href="#rajniti">राजनीति</a>
+      <a href="#khel">खेल</a>
+      <a href="#manoranjan">मनोरंजन</a>
+      <a href="#technology">तकनीक</a>
+      <a href="#business">व्यापार</a>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-bar-wrap">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 समाचार खोजें... (जैसे: क्रिकेट, दिल्ली, बजट)" oninput="searchNews(this.value)"/>
+      <button onclick="searchNews(document.getElementById('searchInput').value)">खोजें</button>
+      <button class="clear-btn" onclick="clearSearch()">✕</button>
+    </div>
+    <div id="search-result-info"></div>
+  </div>
+
+  <!-- Breaking News Ticker -->
+  <div class="breaking-news">
+    <span class="breaking-label">🔴 ब्रेकिंग न्यूज़</span>
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>प्रधानमंत्री ने नई योजना का किया ऐलान &nbsp;|&nbsp; भारत ने जीता क्रिकेट मैच &nbsp;|&nbsp; शेयर बाजार में उछाल, सेंसेक्स 500 अंक ऊपर &nbsp;|&nbsp; मौसम विभाग ने जारी किया अलर्ट &nbsp;|&nbsp; बॉलीवुड की नई फिल्म ने तोड़े रिकॉर्ड &nbsp;|&nbsp; नई शिक्षा नीति पर सरकार का बड़ा फैसला</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="home">
+
+    <!-- Featured News -->
+    <section class="featured">
+      <div class="featured-main">
+        <img src="https://picsum.photos/seed/india1/800/450" alt="मुख्य समाचार"/>
+        <div class="featured-overlay">
+          <span class="category-tag">राष्ट्रीय</span>
+          <h2>भारत की अर्थव्यवस्था विश्व में तीसरे स्थान पर पहुंचने की ओर अग्रसर</h2>
+          <p>नई दिल्ली: देश की जीडीपी वृद्धि दर ने सभी अनुमानों को पार किया, विशेषज्ञों ने जताई खुशी...</p>
+          <span class="news-time">⏰ 2 घंटे पहले</span>
+        </div>
+      </div>
+      <div class="featured-side">
+        <div class="side-card">
+          <img src="https://picsum.photos/seed/cricket/300/180" alt="खेल"/>
+          <div>
+            <span class="category-tag green">खेल</span>
+            <h4>टीम इंडिया ने ऑस्ट्रेलिया को 5 विकेट से हराया</h4>
+            <span class="news-time">⏰ 1 घंटे पहले</span>
+          </div>
+        </div>
+        <div class="side-card">
+          <img src="https://picsum.photos/seed/bollywood/300/180" alt="मनोरंजन"/>
+          <div>
+            <span class="category-tag orange">मनोरंजन</span>
+            <h4>बॉलीवुड की बहुप्रतीक्षित फिल्म ने पहले दिन कमाए 50 करोड़</h4>
+            <span class="news-time">⏰ 3 घंटे पहले</span>
+          </div>
+        </div>
+        <div class="side-card">
+          <img src="https://picsum.photos/seed/tech2024/300/180" alt="तकनीक"/>
+          <div>
+            <span class="category-tag purple">तकनीक</span>
+            <h4>भारत में लॉन्च हुआ नया AI स्टार्टअप, मिला 1000 करोड़ का निवेश</h4>
+            <span class="news-time">⏰ 4 घंटे पहले</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IPL 2026 Section -->
+    <section class="ipl-section" id="ipl">
+      <div class="ipl-header">
+        <div class="ipl-title">🏏 IPL 2026 — Live Cricket</div>
+        <div class="ipl-controls">
+          <span class="live-dot" id="live-dot">🔴 LIVE</span>
+          <span class="last-updated" id="last-updated"></span>
+          <button class="key-btn" onclick="showApiBox()">🔑 API Key</button>
+          <button class="refresh-btn" onclick="fetchLiveFromESPN()">🔄 रिफ्रेश</button>
+        </div>
+      </div>
+
+      <!-- API Key Setup Box -->
+      <div class="api-setup" id="api-setup">
+        <div class="api-setup-inner">
+          <span>🔑</span>
+          <div>
+            <strong>RapidAPI Key डालें (Cricbuzz Live Data के लिए)</strong>
+            <p>Free key पाएं: <a href="https://rapidapi.com/cricketapilive/api/cricbuzz-cricket" target="_blank">rapidapi.com → Cricbuzz Cricket API</a></p>
+          </div>
+          <div class="api-input-row">
+            <input type="text" id="api-key-input" placeholder="अपनी RapidAPI Key यहाँ डालें..."/>
+            <button onclick="saveApiKey()">✅ सेव करें</button>
+          </div>
+          <div id="api-save-msg"></div>
+        </div>
+      </div>
+
+      <!-- Section Tabs — IPL Only -->
+      <div class="section-tabs">
+        <button class="sec-tab active" onclick="switchSection('live', this)">🔴 Live Score</button>
+        <button class="sec-tab" onclick="switchSection('schedule', this)">📅 Schedule</button>
+        <button class="sec-tab" onclick="switchSection('playoffs', this)">🌟 Playoffs</button>
+        <button class="sec-tab" onclick="switchSection('points', this)">📊 Points Table</button>
+        <button class="sec-tab" onclick="switchSection('records', this)">📜 Records</button>
+      </div>
+
+      <!-- LIVE SCORES PANEL -->
+      <div class="sec-panel" id="sec-live">
+
+        <!-- Live Match Score Card -->
+        <div class="live-match-card">
+          <div class="lmc-header">
+            <span class="live-pill">🔴 LIVE</span>
+            <span class="lmc-match" id="lmc-match">Match 64 • 10 May 2026 • 3:30 PM IST</span>
+            <button class="lmc-refresh-btn" onclick="refreshLiveScore()">🔄</button>
+          </div>
+
+          <!-- Teams & Score -->
+          <div class="lmc-scores">
+            <div class="lmc-team">
+              <div class="lmc-team-name" id="lmc-t1">🔴 Royal Challengers Bengaluru</div>
+              <div class="lmc-score" id="srh-score">—</div>
+              <div class="lmc-overs" id="srh-overs"></div>
+            </div>
+            <div class="lmc-vs">VS</div>
+            <div class="lmc-team right">
+              <div class="lmc-team-name" id="lmc-t2">🟣 Kolkata Knight Riders</div>
+              <div class="lmc-score" id="kkr-score">—</div>
+              <div class="lmc-overs" id="kkr-overs"></div>
+            </div>
+          </div>
+
+          <!-- Match Status -->
+          <div class="lmc-status" id="lmc-status">⏳ मैच 3:30 PM IST पर शुरू होगा</div>
+          <div class="lmc-venue" id="lmc-venue">📍 M. Chinnaswamy Stadium, Bengaluru</div>
+
+          <!-- Current Batsmen -->
+          <div class="lmc-section-title">🏏 अभी खेल रहे हैं</div>
+          <table class="lmc-table">
+            <thead><tr><th>बल्लेबाज</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead>
+            <tbody id="live-batsmen">
+              <tr><td colspan="6" style="text-align:center;color:#aaa">⏳ लोड हो रहा है...</td></tr>
+            </tbody>
+          </table>
+
+          <!-- Current Bowler -->
+          <div class="lmc-section-title" style="margin-top:10px">🎯 गेंदबाज</div>
+          <table class="lmc-table">
+            <thead><tr><th>गेंदबाज</th><th>O</th><th>R</th><th>W</th><th>Eco</th></tr></thead>
+            <tbody id="live-bowler">
+              <tr><td colspan="5" style="text-align:center;color:#aaa">⏳ लोड हो रहा है...</td></tr>
+            </tbody>
+          </table>
+
+          <!-- Last Updated -->
+          <div style="text-align:right;font-size:11px;color:#aaa;margin-top:8px" id="last-updated"></div>
+
+          <!-- Commentary Button -->
+          <button class="lmc-comm-btn" onclick="openCommentary()">
+            🎙️ बॉल-दर-बॉल कमेंट्री देखें
+          </button>
+        </div>
+
+        <!-- Previous Match Result -->
+        <div class="prev-result-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div>
+              <span class="sch-badge" style="background:#27ae60;color:white">✅ Match 57 — 3 May 2026</span>
+              <div style="font-size:15px;font-weight:bold;margin-top:6px">🔵 GT vs 🩷 PBKS</div>
+              <div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px">🏆 GT won — Holder & Washington star in nervy last-over win</div>
+            </div>
+            <button class="scorecard-btn" style="width:auto;padding:8px 16px" onclick="openScorecard(0)">📋 Scorecard</button>
+          </div>
+        </div>
+
+        <!-- IPL News Feed -->
+        <div class="espn-live-section">
+          <div class="espn-header">
+            <span>📡 IPL Live News</span>
+            <span style="font-size:11px;color:#888">स्वचालित अपडेट</span>
+          </div>
+          <div id="espn-feed-list">
+            <div style="text-align:center;padding:16px;color:#888">⏳ लोड हो रहा है...</div>
+          </div>
+        </div>
+
+      </div><!-- end sec-live -->
+
+      <!-- COMMENTARY MODAL -->
+      <div id="comm-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;overflow-y:auto">
+        <div style="max-width:680px;margin:20px auto;background:#1a1a2e;border-radius:16px;padding:20px;color:white;position:relative">
+          <button onclick="closeCommentary()" style="position:absolute;top:12px;right:12px;background:#e74c3c;color:white;border:none;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;font-weight:bold">×</button>
+          <div style="font-size:18px;font-weight:bold;margin-bottom:4px">🎙️ बॉल-दर-बॉल कमेंट्री</div>
+          <div style="font-size:13px;color:#f9ca24;margin-bottom:6px">🟠 SRH vs 🟣 KKR • Match 60 • 6 May 2026</div>
+          <div style="font-size:12px;color:#aaa;margin-bottom:12px" id="comm-status">⏳ लोड हो रहा है...</div>
+          <div id="comm-modal-feed" style="max-height:450px;overflow-y:auto"></div>
+          <button onclick="loadCommentary()" style="width:100%;margin-top:12px;padding:10px;background:#6c3483;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer">🔄 अपडेट करें</button>
+        </div>
+      </div>
+
+      <!-- IPL SCHEDULE PANEL -->
+      <div class="sec-panel hidden" id="sec-schedule">
+        <h4 class="bracket-title">📅 IPL 2026 — आगामी मैच</h4>
+        <div class="schedule-grid" id="ipl-schedule-grid"></div>
+        <h4 class="bracket-title" style="margin-top:24px">🏆 हालिया मैच के नतीजे</h4>
+        <div class="schedule-grid" id="recent-results-grid"></div>
+      </div><!-- end sec-schedule -->
+
+      <!-- PLAYOFFS / SEMIFINALS PANEL -->
+      <div class="sec-panel hidden" id="sec-playoffs">
+        <div class="playoffs-bracket">
+          <h4 class="bracket-title">🌟 IPL 2026 — Playoffs Schedule</h4>
+
+          <div class="playoff-info">
+            📌 Top 4 teams qualify → #1 vs #2 (Qualifier 1) | #3 vs #4 (Eliminator) → Qualifier 2 → Final
+          </div>
+
+          <div class="bracket-grid">
+
+            <div class="bracket-card qualifier">
+              <div class="bracket-label">🏆 Qualifier 1</div>
+              <div class="bracket-date">📅 20 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-teams">
+                <div class="bt">🧑 Team #1 <span class="bt-pos">TBD</span></div>
+                <div class="bt-vs">VS</div>
+                <div class="bt">🧑 Team #2 <span class="bt-pos">TBD</span></div>
+              </div>
+              <div class="bracket-venue">📍 Eden Gardens, Kolkata</div>
+              <div class="bracket-note">Winner → Final | Loser → Qualifier 2</div>
+              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+            </div>
+
+            <div class="bracket-card eliminator">
+              <div class="bracket-label">❌ Eliminator</div>
+              <div class="bracket-date">📅 21 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-teams">
+                <div class="bt">🧑 Team #3 <span class="bt-pos">TBD</span></div>
+                <div class="bt-vs">VS</div>
+                <div class="bt">🧑 Team #4 <span class="bt-pos">TBD</span></div>
+              </div>
+              <div class="bracket-venue">📍 MA Chidambaram Stadium, Chennai</div>
+              <div class="bracket-note">Winner → Qualifier 2 | Loser → Out</div>
+              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+            </div>
+
+            <div class="bracket-card qualifier">
+              <div class="bracket-label">🏆 Qualifier 2</div>
+              <div class="bracket-date">📅 23 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-teams">
+                <div class="bt">🧑 Q1 Loser <span class="bt-pos">TBD</span></div>
+                <div class="bt-vs">VS</div>
+                <div class="bt">🧑 Eliminator Winner <span class="bt-pos">TBD</span></div>
+              </div>
+              <div class="bracket-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
+              <div class="bracket-note">Winner → Final</div>
+              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+            </div>
+
+            <div class="bracket-card final">
+              <div class="bracket-label">🏆🏆 IPL 2026 FINAL</div>
+              <div class="bracket-date">📅 26 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-teams">
+                <div class="bt">🏆 Q1 Winner <span class="bt-pos">TBD</span></div>
+                <div class="bt-vs">VS</div>
+                <div class="bt">🏆 Q2 Winner <span class="bt-pos">TBD</span></div>
+              </div>
+              <div class="bracket-venue">📍 Eden Gardens, Kolkata</div>
+              <span class="sch-badge final-badge">🏆 GRAND FINAL</span>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- end sec-playoffs -->
+
+      <!-- POINTS TABLE PANEL -->
+      <div class="sec-panel hidden" id="sec-points">
+        <h4 class="bracket-title">📊 IPL 2026 — प्वाइंट्स टेबल (55 मैच के बाद — 2 May 2026)</h4>
+        <div class="table-wrap">
+          <table class="points-table">
+            <thead>
+              <tr><th>#</th><th>टीम</th><th>M</th><th>W</th><th>L</th><th>NR</th><th>Pts</th><th>NRR</th></tr>
+            </thead>
+            <tbody id="points-tbody">
+            </tbody>
+          </table>
+        </div>
+      </div><!-- end sec-points -->
+
+      <!-- PAST RECORDS PANEL -->
+      <div class="sec-panel hidden" id="sec-records">
+        <h4 class="bracket-title">📜 IPL — सभी सीज़न के रिकॉर्ड (2008–2026)</h4>
+
+        <!-- Top 10 Batsmen IPL 2026 -->
+        <div class="records-section">
+          <h5>🏏 IPL 2026 — Top 10 बल्लेबाज (अभी तक)</h5>
+          <div class="table-wrap">
+            <table class="points-table">
+              <thead><tr><th>#</th><th>खिलाड़ी</th><th>टीम</th><th>M</th><th>रन</th><th>HS</th><th>Avg</th><th>SR</th><th>100s</th><th>50s</th></tr></thead>
+              <tbody id="top-batsmen-body">
+                <tr><td>1</td><td>🔵 Rohit Sharma</td><td>MI</td><td>11</td><td>542</td><td>98*</td><td>49.3</td><td>158.5</td><td>0</td><td>5</td></tr>
+                <tr><td>2</td><td>🟡 Ruturaj Gaikwad</td><td>CSK</td><td>11</td><td>498</td><td>112*</td><td>45.3</td><td>145.2</td><td>1</td><td>3</td></tr>
+                <tr><td>3</td><td>🔴 Virat Kohli</td><td>RCB</td><td>11</td><td>487</td><td>95</td><td>44.3</td><td>152.8</td><td>0</td><td>4</td></tr>
+                <tr><td>4</td><td>🟠 Travis Head</td><td>SRH</td><td>11</td><td>465</td><td>102*</td><td>42.3</td><td>182.4</td><td>1</td><td>3</td></tr>
+                <tr><td>5</td><td>🟣 Sunil Narine</td><td>KKR</td><td>11</td><td>442</td><td>88</td><td>40.2</td><td>178.6</td><td>0</td><td>4</td></tr>
+                <tr><td>6</td><td>🔵 Suryakumar Yadav</td><td>MI</td><td>11</td><td>428</td><td>94*</td><td>38.9</td><td>192.3</td><td>0</td><td>4</td></tr>
+                <tr><td>7</td><td>🟡 Shivam Dube</td><td>CSK</td><td>11</td><td>398</td><td>85*</td><td>36.2</td><td>168.9</td><td>0</td><td>3</td></tr>
+                <tr><td>8</td><td>🟠 Abhishek Sharma</td><td>SRH</td><td>11</td><td>385</td><td>90</td><td>35.0</td><td>195.4</td><td>0</td><td>3</td></tr>
+                <tr><td>9</td><td>🔴 Rajat Patidar</td><td>RCB</td><td>11</td><td>362</td><td>78*</td><td>32.9</td><td>155.2</td><td>0</td><td>3</td></tr>
+                <tr><td>10</td><td>🟣 Rinku Singh</td><td>KKR</td><td>11</td><td>345</td><td>72*</td><td>31.4</td><td>162.7</td><td>0</td><td>2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Season Winners -->
+        <div class="records-section">
+          <h5>🏆 सीज़न वाइज़र (2008–2025)</h5>
+          <div class="table-wrap">
+            <table class="points-table">
+              <thead><tr><th>साल</th><th>चैंपियन</th><th>रनरअप</th><th>फाइनल वेन्यू</th><th>Player of Series</th></tr></thead>
+              <tbody>
+                <tr><td>2025</td><td>🟣 KKR</td><td>🟠 SRH</td><td>Eden Gardens, Kolkata</td><td>Venkatesh Iyer</td></tr>
+                <tr><td>2024</td><td>🟣 KKR</td><td>🟠 SRH</td><td>MA Chidambaram, Chennai</td><td>Sunil Narine</td></tr>
+                <tr><td>2023</td><td>🔵 CSK</td><td>🟢 GT</td><td>Narendra Modi Stadium</td><td>Devon Conway</td></tr>
+                <tr><td>2022</td><td>🔵 GT</td><td>🩷 RR</td><td>Narendra Modi Stadium</td><td>Hardik Pandya</td></tr>
+                <tr><td>2021</td><td>🟡 CSK</td><td>🟣 KKR</td><td>Dubai International</td><td>Faf du Plessis</td></tr>
+                <tr><td>2020</td><td>🟠 MI</td><td>🟡 DC</td><td>Dubai International</td><td>Trent Boult</td></tr>
+                <tr><td>2019</td><td>🔵 MI</td><td>🟡 CSK</td><td>Rajiv Gandhi Stadium</td><td>Imran Tahir</td></tr>
+                <tr><td>2018</td><td>🟡 CSK</td><td>🟠 SRH</td><td>Wankhede Stadium</td><td>Suresh Raina</td></tr>
+                <tr><td>2017</td><td>🟠 MI</td><td>🟡 RPS</td><td>Rajiv Gandhi Stadium</td><td>Ben Stokes</td></tr>
+                <tr><td>2016</td><td>🔴 SRH</td><td>🟡 RCB</td><td>Chinnaswamy Stadium</td><td>Virat Kohli</td></tr>
+                <tr><td>2015</td><td>🔵 MI</td><td>🟡 CSK</td><td>Eden Gardens</td><td>Rohit Sharma</td></tr>
+                <tr><td>2014</td><td>🟣 KKR</td><td>🟡 KXIP</td><td>M. Chinnaswamy</td><td>Glenn Maxwell</td></tr>
+                <tr><td>2013</td><td>🟠 MI</td><td>🟡 CSK</td><td>Eden Gardens</td><td>Shane Watson</td></tr>
+                <tr><td>2012</td><td>🟣 KKR</td><td>🟡 CSK</td><td>MA Chidambaram</td><td>Sunil Narine</td></tr>
+                <tr><td>2011</td><td>🟡 CSK</td><td>🟡 RCB</td><td>MA Chidambaram</td><td>Chris Gayle</td></tr>
+                <tr><td>2010</td><td>🟡 CSK</td><td>🟠 MI</td><td>DY Patil Stadium</td><td>Sachin Tendulkar</td></tr>
+                <tr><td>2009</td><td>🟡 DC</td><td>🩷 RR</td><td>Wanderers, SA</td><td>Adam Gilchrist</td></tr>
+                <tr><td>2008</td><td>🩷 RR</td><td>🟡 CSK</td><td>DY Patil Stadium</td><td>Shane Watson</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- All Time Records -->
+        <div class="records-section">
+          <h5>📊 सर्वकालीन रिकॉर्ड</h5>
+          <div class="records-grid">
+            <div class="record-card">
+              <div class="rec-label">🏏 सबसे ज्यादा रन</div>
+              <div class="rec-value">8,048</div>
+              <div class="rec-player">Virat Kohli (RCB)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">🎯 सबसे ज्यादा विकेट</div>
+              <div class="rec-value">187</div>
+              <div class="rec-player">Yuzvendra Chahal (RR)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">💥 सबसे तेज़ शतक</div>
+              <div class="rec-value">100* (30 balls)</div>
+              <div class="rec-player">Chris Gayle (RCB)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">🏆 सबसे ज्यादा खिताब</div>
+              <div class="rec-value">5 खिताब</div>
+              <div class="rec-player">Mumbai Indians</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">🔥 सबसे उंचा स्कोर</div>
+              <div class="rec-value">263/5</div>
+              <div class="rec-player">RCB vs KXIP (2013)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">💣 सबसे ज्यादा छक्के</div>
+              <div class="rec-value">357</div>
+              <div class="rec-player">Chris Gayle (RCB)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">🎯 सबसे अच्छी इकॉनमी</div>
+              <div class="rec-value">5.96</div>
+              <div class="rec-player">Rashid Khan (SRH)</div>
+            </div>
+            <div class="record-card">
+              <div class="rec-label">💰 सबसे महंगा खिलाड़ी</div>
+              <div class="rec-value">₹24.75 Cr</div>
+              <div class="rec-player">Mitchell Starc (KKR 2024)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IPL 2026 Ball by Ball Commentary -->
+        <div class="records-section">
+          <h5>🎙️ IPL 2026 — हालिया मैचों की कमेंट्री</h5>
+          <div class="comm-match-tabs">
+            <button class="comm-tab active" onclick="showComm(0,this)">MI vs CSK</button>
+            <button class="comm-tab" onclick="showComm(1,this)">RCB vs KKR</button>
+            <button class="comm-tab" onclick="showComm(2,this)">DC vs SRH</button>
+          </div>
+          <div class="commentary-list" id="comm-0">
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.6:</strong> Bumrah की गेंद पर Dhoni ने लगाया छक्का! CSK 185/7</span></div>
+            <div class="ball-item four"><span class="ball-badge">4️⃣</span><span><strong>20.5:</strong> Jadeja ने मारा चौका! 179/7</span></div>
+            <div class="ball-item wicket"><span class="ball-badge">🔴W</span><span><strong>20.4:</strong> Dube आउट! Caught at long-on. 175/7</span></div>
+            <div class="ball-item"><span class="ball-badge">2️⃣</span><span><strong>20.3:</strong> Dube ने दो रन लिए। 175/6</span></div>
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.2:</strong> Dube का शानदार छक्का! 173/6</span></div>
+            <div class="ball-item"><span class="ball-badge">1️⃣</span><span><strong>20.1:</strong> Rayudu ने एक रन लिया। 167/6</span></div>
+            <div class="ball-item wicket"><span class="ball-badge">🔴W</span><span><strong>19.6:</strong> Rayudu रन आउट! 166/6</span></div>
+            <div class="ball-item four"><span class="ball-badge">4️⃣</span><span><strong>19.5:</strong> Gaikwad ने मारा चौका! 166/5</span></div>
+          </div>
+          <div class="commentary-list hidden" id="comm-1">
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.6:</strong> Rinku Singh ने लगाया छक्का! KKR 198/5</span></div>
+            <div class="ball-item four"><span class="ball-badge">4️⃣</span><span><strong>20.5:</strong> Narine ने मारा चौका! 192/5</span></div>
+            <div class="ball-item wicket"><span class="ball-badge">🔴W</span><span><strong>20.4:</strong> Iyer आउट! Caught behind. 188/5</span></div>
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.3:</strong> Narine का छक्का! 188/4</span></div>
+            <div class="ball-item"><span class="ball-badge">1️⃣</span><span><strong>20.2:</strong> Iyer ने एक रन लिया। 182/4</span></div>
+            <div class="ball-item four"><span class="ball-badge">4️⃣</span><span><strong>20.1:</strong> Narine ने मारा चौका! 181/4</span></div>
+          </div>
+          <div class="commentary-list hidden" id="comm-2">
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.6:</strong> Abhishek Sharma ने लगाया छक्का! SRH 210/4</span></div>
+            <div class="ball-item wicket"><span class="ball-badge">🔴W</span><span><strong>20.5:</strong> Head आउट! Bowled. 204/4</span></div>
+            <div class="ball-item four"><span class="ball-badge">4️⃣</span><span><strong>20.4:</strong> Abhishek ने मारा चौका! 204/3</span></div>
+            <div class="ball-item six"><span class="ball-badge">6️⃣</span><span><strong>20.3:</strong> Head का छक्का! 200/3</span></div>
+            <div class="ball-item"><span class="ball-badge">2️⃣</span><span><strong>20.2:</strong> Head ने दो रन लिए। 194/3</span></div>
+          </div>
+        </div>
+
+    </section>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <button class="tab active" onclick="filterNews('all', this)">सभी</button>
+      <button class="tab" onclick="filterNews('rashtriya', this)">राष्ट्रीय</button>
+      <button class="tab" onclick="filterNews('rajniti', this)">राजनीति</button>
+      <button class="tab" onclick="filterNews('khel', this)">खेल</button>
+      <button class="tab" onclick="filterNews('manoranjan', this)">मनोरंजन</button>
+      <button class="tab" onclick="filterNews('technology', this)">तकनीक</button>
+      <button class="tab" onclick="filterNews('business', this)">व्यापार</button>
+    </div>
+
+    <!-- News Grid — loaded from news.json -->
+    <section class="news-grid" id="news-grid">
+    </section>
+
+    <!-- Weather & Poll Row -->
+    <div class="widgets-row">
+
+      <!-- Weather Widget -->
+      <div class="widget weather-widget">
+        <h3>🌤️ मौसम जानकारी</h3>
+        <div class="city-tabs">
+          <button class="city-btn active" onclick="showWeather('delhi', this)">दिल्ली</button>
+          <button class="city-btn" onclick="showWeather('mumbai', this)">मुंबई</button>
+          <button class="city-btn" onclick="showWeather('bangalore', this)">बेंगलुरु</button>
+          <button class="city-btn" onclick="showWeather('kolkata', this)">कोलकाता</button>
+        </div>
+        <div class="weather-display" id="weather-display">
+          <div class="weather-main">
+            <span class="weather-icon" id="w-icon">☀️</span>
+            <div>
+              <div class="weather-temp" id="w-temp">38°C</div>
+              <div class="weather-desc" id="w-desc">साफ आसमान</div>
+              <div class="weather-city" id="w-city">नई दिल्ली</div>
+            </div>
+          </div>
+          <div class="weather-details">
+            <div><span>💧 नमी</span><strong id="w-humidity">45%</strong></div>
+            <div><span>💨 हवा</span><strong id="w-wind">12 km/h</strong></div>
+            <div><span>👁️ दृश्यता</span><strong id="w-vis">10 km</strong></div>
+            <div><span>🌡️ महसूस</span><strong id="w-feels">41°C</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poll Widget -->
+      <div class="widget poll-widget">
+        <h3>📊 आज का सर्वेक्षण</h3>
+        <p class="poll-question">आपके अनुसार भारत की सबसे बड़ी समस्या क्या है?</p>
+        <div class="poll-options" id="poll-options">
+          <button class="poll-btn" onclick="vote(0)">📈 महंगाई</button>
+          <button class="poll-btn" onclick="vote(1)">💼 बेरोजगारी</button>
+          <button class="poll-btn" onclick="vote(2)">🏥 स्वास्थ्य सेवा</button>
+          <button class="poll-btn" onclick="vote(3)">📚 शिक्षा</button>
+        </div>
+        <div class="poll-results hidden" id="poll-results">
+          <div class="poll-bar-wrap" data-index="0"><span>📈 महंगाई</span><div class="poll-bar"><div class="poll-fill" id="bar-0"></div></div><span id="pct-0">0%</span></div>
+          <div class="poll-bar-wrap" data-index="1"><span>💼 बेरोजगारी</span><div class="poll-bar"><div class="poll-fill" id="bar-1"></div></div><span id="pct-1">0%</span></div>
+          <div class="poll-bar-wrap" data-index="2"><span>🏥 स्वास्थ्य सेवा</span><div class="poll-bar"><div class="poll-fill" id="bar-2"></div></div><span id="pct-2">0%</span></div>
+          <div class="poll-bar-wrap" data-index="3"><span>📚 शिक्षा</span><div class="poll-bar"><div class="poll-fill" id="bar-3"></div></div><span id="pct-3">0%</span></div>
+          <p class="poll-total" id="poll-total"></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Load More -->
+    <div class="load-more">
+      <button onclick="alert('और समाचार लोड हो रहे हैं...')">और समाचार देखें ↓</button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>📺 Hindi News (SAMACHAR)</h3>
+        <p>सच की आवाज़, हर पल। हम आपको देश-विदेश की ताज़ा खबरें हिंदी में निष्पक्ष रूप से पहुंचाते हैं।</p>
+      </div>
+      <div>
+        <h4>श्रेणियाँ</h4>
+        <ul>
+          <li><a href="#">राष्ट्रीय</a></li>
+          <li><a href="#">राजनीति</a></li>
+          <li><a href="#">खेल</a></li>
+          <li><a href="#">मनोरंजन</a></li>
+          <li><a href="#">तकनीक</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>हमसे जुड़ें</h4>
+        <ul>
+          <li><a href="#">📘 Facebook</a></li>
+          <li><a href="#">🐦 Twitter / X</a></li>
+          <li><a href="#">📸 Instagram</a></li>
+          <li><a href="#">▶️ YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>न्यूज़लेटर</h4>
+        <p>ताज़ा खबरें सीधे अपने ईमेल पर पाएं</p>
+        <div class="newsletter">
+          <input type="email" placeholder="आपका ईमेल"/>
+          <button>सब्सक्राइब</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Hindi News (SAMACHAR) | सर्वाधिकार सुरक्षित | <a href="#">गोपनीयता नीति</a> | <a href="#">नियम व शर्तें</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Scorecard Modal -->
+  <div id="scorecard-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto">
+    <div style="background:white;border-radius:16px;max-width:800px;width:100%;padding:24px;position:relative;margin:auto">
+      <button onclick="closeScorecard()" style="position:absolute;top:14px;right:14px;background:#e74c3c;color:white;border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;font-weight:bold">×</button>
+      <div id="scorecard-modal-body"></div>
+    </div>
+  </div>
+</body>
+</html>
