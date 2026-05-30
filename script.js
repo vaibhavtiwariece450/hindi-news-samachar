@@ -283,97 +283,293 @@ const IPL2026_BATSMEN = [
 // ══════════════════════════════════════════════════════
 
 // ══════════════════════════════════════════════════════
-//  LIVE SCORE ON DASHBOARD
+//  LIVE SCORE ENGINE
+//  Strategy:
+//   1. If user has saved a RapidAPI key → use Cricbuzz API (real ball-by-ball)
+//   2. Otherwise → poll TOI/NDTV RSS feeds every 60s for score headlines
+//  The 2-second interval is removed — RSS feeds don't update that fast
+//  and it just hammers the proxy for no benefit.
 // ══════════════════════════════════════════════════════
 
 let dashboardRefreshTimer = null;
+let liveRefreshTimer      = null;
+let espnRefreshTimer      = null;
+let lastScoreText         = '';
 
+// ── Cricbuzz RapidAPI live fetch ─────────────────────
+async function fetchCricbuzzLive() {
+  const key = localStorage.getItem('rapidapi_key');
+  if (!key) return false;
+
+  try {
+    // Step 1: get list of live matches
+    const res = await fetch('https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live', {
+      headers: {
+        'x-rapidapi-key':  key,
+        'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+      },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) {
+      if (res.status === 403 || res.status === 401) {
+        showApiKeyError('⚠️ API Key गलत है या expire हो गई। नई key डालें।');
+      }
+      return false;
+    }
+
+    const data = await res.json();
+    // typeMatches → matchValues → matchInfo
+    const allMatches = [];
+    (data.typeMatches || []).forEach(type => {
+      (type.seriesMatches || []).forEach(series => {
+        (series.seriesAdWrapper?.matches || []).forEach(m => allMatches.push(m));
+      });
+    });
+
+    // Find IPL match
+    const iplMatch = allMatches.find(m => {
+      const desc = (m.matchInfo?.seriesName || '').toLowerCase();
+      const t1   = (m.matchInfo?.team1?.teamName || '').toLowerCase();
+      const t2   = (m.matchInfo?.team2?.teamName || '').toLowerCase();
+      return desc.includes('ipl') || desc.includes('indian premier') ||
+             isIPL(t1) || isIPL(t2);
+    });
+
+    if (!iplMatch) {
+      showNoLiveMatch();
+      return true; // key worked, just no IPL match right now
+    }
+
+    const info  = iplMatch.matchInfo;
+    const score = iplMatch.matchScore;
+
+    // Update team names
+    const t1Name = info.team1?.teamName || '';
+    const t2Name = info.team2?.teamName || '';
+    setEl('lmc-t1', t1Name);
+    setEl('lmc-t2', t2Name);
+    setEl('lmc-match', `${info.matchDesc || ''} • ${info.startDate ? formatMatchDate(info.startDate) : ''}`);
+    setEl('lmc-venue', `📍 ${info.venueInfo?.ground || ''}, ${info.venueInfo?.city || ''}`);
+
+    // Scores
+    const inn1 = score?.team1Score?.inngs1;
+    const inn2 = score?.team2Score?.inngs1;
+
+    if (inn1) {
+      setEl('srh-score', `${inn1.runs}/${inn1.wickets}`);
+      setEl('srh-overs', `(${inn1.overs} ov)`);
+    } else {
+      setEl('srh-score', 'Yet to bat');
+      setEl('srh-overs', '');
+    }
+    if (inn2) {
+      setEl('kkr-score', `${inn2.runs}/${inn2.wickets}`);
+      setEl('kkr-overs', `(${inn2.overs} ov)`);
+    } else {
+      setEl('kkr-score', 'Yet to bat');
+      setEl('kkr-overs', '');
+    }
+
+    // Status
+    const statusEl = document.getElementById('lmc-status');
+    if (statusEl) {
+      statusEl.textContent = info.status || '🔴 LIVE';
+      statusEl.style.color = '#f9ca24';
+    }
+
+    // Step 2: fetch scorecard for batsmen/bowler
+    const matchId = info.matchId;
+    if (matchId) await fetchCricbuzzScorecard(matchId, key);
+
+    updateLastUpdated();
+    return true;
+
+  } catch(e) {
+    console.warn('Cricbuzz API error:', e.message);
+    return false;
+  }
+}
+
+async function fetchCricbuzzScorecard(matchId, key) {
+  try {
+    const res = await fetch(`https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/scard`, {
+      headers: {
+        'x-rapidapi-key':  key,
+        'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+      },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+
+    // Find current innings (last one in scoreCard array)
+    const innings = data.scoreCard || [];
+    const current = innings[innings.length - 1];
+    if (!current) return;
+
+    // Batsmen
+    const batsmen = (current.batTeamDetails?.batsmenData || {});
+    const activeBats = Object.values(batsmen)
+      .filter(b => b.outDesc === '' || b.outDesc === undefined)
+      .slice(0, 2);
+
+    const batsmenEl = document.getElementById('live-batsmen');
+    if (batsmenEl) {
+      if (activeBats.length > 0) {
+        batsmenEl.innerHTML = activeBats.map(b => `
+          <tr>
+            <td style="color:white;text-align:left;font-weight:600">${sanitizeText(b.batName || '')} ${b.isCaptain ? '(c)' : ''} ${b.isKeeper ? '†' : ''}</td>
+            <td>${b.runs ?? '—'}</td>
+            <td>${b.balls ?? '—'}</td>
+            <td>${b.fours ?? 0}</td>
+            <td>${b.sixes ?? 0}</td>
+            <td>${b.strikeRate ?? '—'}</td>
+          </tr>`).join('');
+      } else {
+        batsmenEl.innerHTML = '<tr><td colspan="6" style="color:#aaa;text-align:center;padding:8px">⏳ डेटा लोड हो रहा है...</td></tr>';
+      }
+    }
+
+    // Current bowler
+    const bowlers = (current.bowlTeamDetails?.bowlersData || {});
+    const activeBowler = Object.values(bowlers)
+      .filter(b => b.isCurrentBowler)
+      .slice(0, 1);
+
+    const bowlerEl = document.getElementById('live-bowler');
+    if (bowlerEl) {
+      if (activeBowler.length > 0) {
+        const b = activeBowler[0];
+        bowlerEl.innerHTML = `
+          <tr>
+            <td style="color:white;text-align:left;font-weight:600">${sanitizeText(b.bowlName || '')}</td>
+            <td>${b.overs ?? '—'}</td>
+            <td>${b.runs ?? '—'}</td>
+            <td>${b.wickets ?? '—'}</td>
+            <td>${b.economy ?? '—'}</td>
+          </tr>`;
+      } else {
+        bowlerEl.innerHTML = '<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">⏳ गेंदबाज डेटा नहीं मिला</td></tr>';
+      }
+    }
+
+  } catch(e) {
+    console.warn('Scorecard fetch error:', e.message);
+  }
+}
+
+function formatMatchDate(ts) {
+  try {
+    return new Date(parseInt(ts)).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  } catch { return ''; }
+}
+
+function showApiKeyError(msg) {
+  const el = document.getElementById('api-save-msg');
+  if (el) { el.style.color = '#e74c3c'; el.textContent = msg; }
+  document.getElementById('api-setup').style.display = 'block';
+}
+
+function showNoLiveMatch() {
+  const todayMatches = getTodayMatch();
+  const m = todayMatches[0] || IPL2026_SCHEDULE.find(s => s.status === 'upcoming');
+  setEl('lmc-status', m ? `⏳ अगला मैच: ${m.date} • ${m.time} IST` : '⏳ अभी कोई लाइव मैच नहीं');
+  const batsmenEl = document.getElementById('live-batsmen');
+  if (batsmenEl) batsmenEl.innerHTML = '<tr><td colspan="6" style="color:#aaa;text-align:center;padding:12px">⏳ मैच शुरू होने पर स्कोर अपडेट होगा</td></tr>';
+  const bowlerEl = document.getElementById('live-bowler');
+  if (bowlerEl) bowlerEl.innerHTML = '<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">⏳ मैच शुरू होने का इंतजार करें</td></tr>';
+}
+
+// ── RSS fallback (no API key) ────────────────────────
+async function fetchRSSFallback() {
+  const RSS_FEEDS = [
+    'https://timesofindia.indiatimes.com/rssfeeds/4719148.cms',
+    'https://sports.ndtv.com/feeds/rss/cricket.xml',
+  ];
+
+  for (const feed of RSS_FEEDS) {
+    try {
+      const res = await fetch(
+        'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed),
+        { signal: AbortSignal.timeout(7000) }
+      );
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data.status !== 'ok') continue;
+
+      const items = (data.items || []).filter(i => isIPL(i.title || ''));
+      if (items.length === 0) continue;
+
+      const latest = items[0];
+      const title  = latest.title || '';
+      const desc   = (latest.description || '').replace(/<[^>]+>/g, '').trim();
+
+      // Try to extract score from headline e.g. "RCB 145/6 (18.2 ov)"
+      const scoreMatch = (title + ' ' + desc).match(/(\d{1,3}\/\d{1,2})\s*\((\d{1,2}\.?\d?)\s*ov/i);
+
+      const statusEl = document.getElementById('lmc-status');
+      if (statusEl) {
+        statusEl.textContent = scoreMatch
+          ? `🏏 ${scoreMatch[1]} (${scoreMatch[2]} ov) — ${sanitizeText(title)}`
+          : sanitizeText(title);
+        statusEl.style.color = '#f9ca24';
+      }
+
+      // Show headline in batsmen row
+      const batsmenEl = document.getElementById('live-batsmen');
+      if (batsmenEl) {
+        batsmenEl.innerHTML = `
+          <tr><td colspan="6" style="color:white;text-align:left;padding:8px;font-size:13px">
+            📰 ${sanitizeText(title)}
+          </td></tr>
+          ${desc ? `<tr><td colspan="6" style="color:#aaa;font-size:11px;text-align:left;padding:4px 8px">
+            ${sanitizeText(desc.substring(0, 200))}
+          </td></tr>` : ''}
+          <tr><td colspan="6" style="color:#888;font-size:11px;text-align:center;padding:6px">
+            🔑 बेहतर लाइव स्कोर के लिए RapidAPI Key डालें
+          </td></tr>`;
+      }
+
+      const bowlerEl = document.getElementById('live-bowler');
+      if (bowlerEl) bowlerEl.innerHTML = '<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px;font-size:12px">RSS फीड से बॉलर डेटा उपलब्ध नहीं</td></tr>';
+
+      updateLastUpdated();
+      return; // success
+    } catch(e) { continue; }
+  }
+
+  // All feeds failed
+  showNoLiveMatch();
+}
+
+// ── Main refresh dispatcher ──────────────────────────
 async function refreshLiveScore() {
   const btn = document.querySelector('.lmc-refresh-btn');
   if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
 
-  const t1kw = (window._todayT1 || '').split(' ').filter(w => w.length > 3);
-  const t2kw = (window._todayT2 || '').split(' ').filter(w => w.length > 3);
-
   try {
-    const res = await fetch(
-      'https://api.rss2json.com/v1/api.json?rss_url=' +
-      encodeURIComponent('https://timesofindia.indiatimes.com/rssfeeds/4719148.cms'),
-      { signal: AbortSignal.timeout(6000) }
-    );
-    const data = await res.json();
-    const items = data.items || [];
-
-    // Find today's match items
-    const matchItems = items.filter(i => {
-      const t = (i.title || '').toLowerCase();
-      const hasT1 = t1kw.some(k => t.includes(k.toLowerCase()));
-      const hasT2 = t2kw.some(k => t.includes(k.toLowerCase()));
-      return hasT1 || hasT2;
-    });
-
-    if (matchItems.length > 0) {
-      const latest = matchItems[0];
-      const title  = latest.title || '';
-      const desc   = (latest.description || '').replace(/<[^>]+>/g, '').trim();
-
-      // Extract score patterns: "145/6 (18.2 ov)" or "RCB 145/6"
-      const allText = title + ' ' + desc;
-      const scoreReg = /\b(\d{1,3})\/?(\d{1,2})\b.*?\((\d{1,2}\.?\d?)\s*[Oo]v/g;
-      const scores = [];
-      let sm;
-      while ((sm = scoreReg.exec(allText)) !== null && scores.length < 2) {
-        scores.push({ runs: sm[1], wkts: sm[2] || '?', overs: sm[3] });
-      }
-
-      if (scores[0]) {
-        document.getElementById('srh-score').textContent = `${scores[0].runs}/${scores[0].wkts}`;
-        document.getElementById('srh-overs').textContent = `(${scores[0].overs} ov)`;
-      }
-      if (scores[1]) {
-        document.getElementById('kkr-score').textContent = `${scores[1].runs}/${scores[1].wkts}`;
-        document.getElementById('kkr-overs').textContent = `(${scores[1].overs} ov)`;
-      }
-
-      // Sanitize before inserting into DOM
-      const safeTitle = sanitizeText(title);
-      const safeDesc  = sanitizeText(desc);
-
-      document.getElementById('lmc-status').textContent = safeTitle;
-      document.getElementById('lmc-status').style.color = '#f9ca24';
-
-      document.getElementById('live-batsmen').innerHTML =
-        `<tr><td colspan="6" style="color:white;text-align:left;padding:8px">📰 ${safeTitle}</td></tr>
-         ${safeDesc ? `<tr><td colspan="6" style="color:#aaa;font-size:12px;text-align:left;padding:4px 8px">${safeDesc.substring(0,200)}</td></tr>` : ''}`;
-
-      document.getElementById('live-bowler').innerHTML =
-        `<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">🔄 अपडेट के लिए रिफ्रेश करें</td></tr>`;
-
+    const key = localStorage.getItem('rapidapi_key');
+    if (key) {
+      // Try Cricbuzz API first
+      const ok = await fetchCricbuzzLive();
+      if (!ok) await fetchRSSFallback(); // fall back if API fails
     } else {
-      // No live data yet — show match info
-      const todayMatches = getTodayMatch();
-      const m = todayMatches[0];
-      document.getElementById('lmc-status').textContent =
-        m ? `⏳ मैच ${m.time} IST पर शुरू होगा` : '⏳ कोई लाइव डेटा नहीं';
-      document.getElementById('live-batsmen').innerHTML =
-        '<tr><td colspan="6" style="color:#aaa;text-align:center;padding:12px">⏳ मैच शुरू होने पर स्कोर अपडेट होगा</td></tr>';
-      document.getElementById('live-bowler').innerHTML =
-        '<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">⏳ मैच शुरू होने का इंतजार करें</td></tr>';
+      await fetchRSSFallback();
     }
-
-    // Fix: update the single correct last-updated element
-    const lu = document.getElementById('last-updated');
-    if (lu) lu.textContent = 'अपडेट: ' + new Date().toLocaleTimeString('hi-IN');
-
-  } catch(e) {
-    document.getElementById('lmc-status').textContent = '⚠️ डेटा लोड नहीं हुआ — रिफ्रेश करें';
   } finally {
     if (btn) { btn.textContent = '🔄'; btn.disabled = false; }
   }
 }
 
-// Today's match — auto-detect from schedule
-// Uses a locale-independent date format to avoid locale mismatch bugs
+function updateLastUpdated() {
+  const time = new Date().toLocaleTimeString('hi-IN');
+  const lu  = document.getElementById('last-updated');
+  const lu2 = document.getElementById('ipl-last-updated');
+  if (lu)  lu.textContent  = 'अपडेट: ' + time;
+  if (lu2) lu2.textContent = 'अपडेट: ' + time;
+}
+
+// ── Today's match header ─────────────────────────────
 function getTodayMatch() {
   const today = new Date();
   const dd = today.getDate();
@@ -389,43 +585,56 @@ function updateLiveMatchHeader() {
   const matches = getTodayMatch();
   const m = matches.length > 0 ? matches[0] : IPL2026_SCHEDULE.find(s => s.status === 'upcoming');
   if (!m) return;
-  const el = id => document.getElementById(id);
-  if (el('lmc-match'))  el('lmc-match').textContent  = `${m.match} • ${m.date} • ${m.time} IST`;
-  if (el('lmc-t1'))     el('lmc-t1').textContent     = m.t1;
-  if (el('lmc-t2'))     el('lmc-t2').textContent     = m.t2;
-  if (el('lmc-venue'))  el('lmc-venue').textContent  = `📍 ${m.venue}`;
-  if (el('lmc-status')) el('lmc-status').textContent = matches.length > 0
+  setEl('lmc-match',  `${m.match} • ${m.date} • ${m.time} IST`);
+  setEl('lmc-t1',     m.t1);
+  setEl('lmc-t2',     m.t2);
+  setEl('lmc-venue',  `📍 ${m.venue}`);
+  setEl('lmc-status', matches.length > 0
     ? `⏳ मैच ${m.time} IST पर शुरू होगा`
-    : `⏳ अगला मैच: ${m.date} • ${m.time} IST`;
-  // Update commentary modal title dynamically
-  if (el('comm-modal-match-title'))
-    el('comm-modal-match-title').textContent = `${m.t1} vs ${m.t2} • ${m.match} • ${m.date}`;
-  // Store keywords for RSS matching
+    : `⏳ अगला मैच: ${m.date} • ${m.time} IST`);
+  const commTitle = document.getElementById('comm-modal-match-title');
+  if (commTitle) commTitle.textContent = `${m.t1} vs ${m.t2} • ${m.match} • ${m.date}`;
   window._todayT1 = m.t1.toLowerCase();
   window._todayT2 = m.t2.toLowerCase();
 }
 
-// Auto refresh dashboard score every 30 seconds
+// Helper
+function setEl(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+// ── Timers ───────────────────────────────────────────
 function startDashboardRefresh() {
   updateLiveMatchHeader();
   refreshLiveScore();
-  dashboardRefreshTimer = setInterval(refreshLiveScore, 30000);
+  // If API key present: refresh every 30s (Cricbuzz updates ~every 30s)
+  // If no key: refresh every 60s (RSS feeds don't update faster)
+  const interval = localStorage.getItem('rapidapi_key') ? 30000 : 60000;
+  dashboardRefreshTimer = setInterval(refreshLiveScore, interval);
 }
-// ══════════════════════════════════════════════════════
 
-let commModalTimer = null;
+function startLiveRefresh() {
+  clearInterval(liveRefreshTimer);
+  clearInterval(espnRefreshTimer);
+  // Fetch ESPN/TOI feed for the news panel — every 60s is plenty
+  espnRefreshTimer = setInterval(fetchLiveFromESPN, 60000);
+}
 
 function openCommentary() {
   document.getElementById('comm-modal').style.display = 'block';
   document.body.style.overflow = 'hidden';
   loadCommentary();
-  commModalTimer = setInterval(loadCommentary, 10000);
+  if (!window._commModalTimer) {
+    window._commModalTimer = setInterval(loadCommentary, 10000);
+  }
 }
 
 function closeCommentary() {
   document.getElementById('comm-modal').style.display = 'none';
   document.body.style.overflow = '';
-  clearInterval(commModalTimer);
+  clearInterval(window._commModalTimer);
+  window._commModalTimer = null;
 }
 
 async function loadCommentary() {
@@ -471,83 +680,13 @@ async function loadCommentary() {
 }
 
 // ══════════════════════════════════════════════════════
-//  SMART LIVE REFRESH — 2 SECOND UPDATES
-// ══════════════════════════════════════════════════════
-
-let liveRefreshTimer = null;
-let espnRefreshTimer = null;  // Fix: store so it can be cleared
-let lastScoreText = '';
-
-// Multiple RSS sources for live IPL scores
-const SCORE_FEEDS = [
-  'https://timesofindia.indiatimes.com/rssfeeds/4719148.cms',  // TOI Sports
-  'https://www.espncricinfo.com/rss/content/story/feeds/0.xml', // ESPN
-  'https://sports.ndtv.com/feeds/rss/cricket.xml',             // NDTV Sports
-];
-
-function startLiveRefresh() {
-  clearInterval(liveRefreshTimer);
-  clearInterval(espnRefreshTimer);  // Fix: clear the previously leaked interval
-  liveRefreshTimer = setInterval(fetchLiveScore2s, 2000);
-  espnRefreshTimer = setInterval(fetchLiveFromESPN, 30000);
-}
-
-async function fetchLiveScore2s() {
-  for (const feed of SCORE_FEEDS) {
-    try {
-      const res = await fetch(
-        'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed),
-        { signal: AbortSignal.timeout(4000) }
-      );
-      if (!res.ok) continue;
-      const data = await res.json();
-      if (data.status !== 'ok') continue;
-
-      const items = data.items || [];
-      let found = false;
-
-      for (const item of items) {
-        const title = item.title || '';
-        const desc  = (item.description || '').replace(/<[^>]+>/g, '');
-        const tl    = title.toLowerCase();
-
-        // Match SRH vs KKR
-        const isSRH = tl.includes('srh') || tl.includes('sunrisers') || tl.includes('hyderabad');
-        const isKKR = tl.includes('kkr') || tl.includes('kolkata') || tl.includes('knight riders');
-
-        if (isSRH || isKKR) {
-          const el = document.getElementById('score-srh-kkr');
-          if (el && title !== lastScoreText) {
-            lastScoreText = title;
-            el.style.opacity = '0.3';
-            el.textContent = title;
-            el.style.color = '#f9ca24';
-            setTimeout(() => { el.style.opacity = '1'; }, 200);
-            found = true;
-
-            // Update timestamp
-            const lu = document.getElementById('last-updated');
-            if (lu) lu.textContent = '🔄 ' + new Date().toLocaleTimeString('hi-IN');
-          }
-          break;
-        }
-      }
-
-      if (found) break; // Stop trying other feeds if we found data
-
-    } catch(e) { continue; }
-  }
-}
-
-// ══════════════════════════════════════════════════════
-//  ESPN CRICINFO RSS — LIVE FETCH
+//  ESPN / TOI RSS — IPL NEWS FEED PANEL
 // ══════════════════════════════════════════════════════
 
 async function fetchESPN() {
   const RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
   const FEEDS = [
     'https://timesofindia.indiatimes.com/rssfeeds/4719148.cms',
-    'https://www.espncricinfo.com/rss/content/story/feeds/0.xml',
     'https://sports.ndtv.com/feeds/rss/cricket.xml',
   ];
   for (const feed of FEEDS) {
@@ -828,8 +967,12 @@ function saveApiKey() {
   if (!key) { msg.style.color = '#e74c3c'; msg.textContent = '⚠️ Key डालें।'; return; }
   localStorage.setItem('rapidapi_key', key);
   msg.style.color = '#27ae60';
-  msg.textContent = '✅ Key सेव हो गई!';
-  setTimeout(() => { document.getElementById('api-setup').style.display = 'none'; }, 1200);
+  msg.textContent = '✅ Key सेव हो गई! अब Cricbuzz से लाइव डेटा मिलेगा।';
+  // Restart refresh with faster 30s interval now that we have a key
+  clearInterval(dashboardRefreshTimer);
+  dashboardRefreshTimer = setInterval(refreshLiveScore, 30000);
+  refreshLiveScore(); // immediate fetch with new key
+  setTimeout(() => { document.getElementById('api-setup').style.display = 'none'; }, 1500);
 }
 
 // ══════════════════════════════════════════════════════
