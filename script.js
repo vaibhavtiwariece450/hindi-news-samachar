@@ -25,29 +25,141 @@ function sanitizeUrl(url) {
 }
 
 // ══════════════════════════════════════════════════════
-//  IPL 2026 DATA
+//  IPL 2026 DATA  — updated 30 May 2026 (Playoffs stage)
 // ══════════════════════════════════════════════════════
+
+// League stage is over. Showing playoff schedule.
 const IPL2026_SCHEDULE = [
-  { date:'3 May 2026',  time:'3:30 PM', t1:'Sunrisers Hyderabad',         t2:'Kolkata Knight Riders',       venue:'Rajiv Gandhi Stadium, Hyderabad',   match:'Match 56', status:'done' },
-  { date:'3 May 2026',  time:'7:30 PM', t1:'Gujarat Titans',              t2:'Punjab Kings',                venue:'Narendra Modi Stadium, Ahmedabad',  match:'Match 57', status:'done' },
-  { date:'4 May 2026',  time:'7:30 PM', t1:'Mumbai Indians',              t2:'Royal Challengers Bengaluru', venue:'Wankhede Stadium, Mumbai',           match:'Match 58', status:'upcoming' },
-  { date:'5 May 2026',  time:'7:30 PM', t1:'Chennai Super Kings',         t2:'Kolkata Knight Riders',       venue:'MA Chidambaram Stadium, Chennai',   match:'Match 59', status:'upcoming' },
-  { date:'6 May 2026',  time:'7:30 PM', t1:'Sunrisers Hyderabad',         t2:'Delhi Capitals',              venue:'Rajiv Gandhi Stadium, Hyderabad',   match:'Match 60', status:'upcoming' },
-  { date:'7 May 2026',  time:'7:30 PM', t1:'Lucknow Super Giants',        t2:'Gujarat Titans',              venue:'BRSABV Ekana Stadium, Lucknow',     match:'Match 61', status:'upcoming' },
-  { date:'8 May 2026',  time:'7:30 PM', t1:'Rajasthan Royals',            t2:'Delhi Capitals',              venue:'Sawai Mansingh Stadium, Jaipur',    match:'Match 62', status:'upcoming' },
-  { date:'9 May 2026',  time:'7:30 PM', t1:'Mumbai Indians',              t2:'Chennai Super Kings',         venue:'Wankhede Stadium, Mumbai',           match:'Match 63', status:'upcoming' },
-  { date:'10 May 2026', time:'3:30 PM', t1:'Royal Challengers Bengaluru', t2:'Kolkata Knight Riders',       venue:'M. Chinnaswamy Stadium, Bengaluru', match:'Match 64', status:'today' },
-  { date:'11 May 2026', time:'7:30 PM', t1:'Punjab Kings',                t2:'Sunrisers Hyderabad',         venue:'PCA Stadium, Mullanpur',             match:'Match 65', status:'upcoming' },
-  { date:'12 May 2026', time:'7:30 PM', t1:'Gujarat Titans',              t2:'Rajasthan Royals',            venue:'Narendra Modi Stadium, Ahmedabad',  match:'Match 66', status:'upcoming' },
-  { date:'13 May 2026', time:'7:30 PM', t1:'Delhi Capitals',              t2:'Lucknow Super Giants',        venue:'Arun Jaitley Stadium, Delhi',       match:'Match 67', status:'upcoming' },
-  { date:'14 May 2026', time:'7:30 PM', t1:'Kolkata Knight Riders',       t2:'Mumbai Indians',              venue:'Eden Gardens, Kolkata',             match:'Match 68 (Last League)', status:'upcoming' },
+  // ── Playoffs ──
+  { date:'26 May 2026', time:'7:30 PM', t1:'Royal Challengers Bengaluru', t2:'Gujarat Titans',      venue:'HPCA Stadium, Dharamshala',                    match:'Qualifier 1', status:'done' },
+  { date:'27 May 2026', time:'7:30 PM', t1:'Sunrisers Hyderabad',         t2:'Rajasthan Royals',    venue:'Maharaja Yadavindra Singh Stadium, Mullanpur',  match:'Eliminator',  status:'done' },
+  { date:'29 May 2026', time:'7:30 PM', t1:'Gujarat Titans',              t2:'Rajasthan Royals',    venue:'Maharaja Yadavindra Singh Stadium, Mullanpur',  match:'Qualifier 2', status:'done' },
+  { date:'31 May 2026', time:'7:30 PM', t1:'Royal Challengers Bengaluru', t2:'Gujarat Titans',      venue:'Narendra Modi Stadium, Ahmedabad',              match:'FINAL 🏆',    status:'upcoming' },
 ];
 
 const IPL2026_RESULTS = [
   {
-    date:'2 May 2026', t1:'Mumbai Indians', t2:'Chennai Super Kings',
-    s1:'159/7 (20 ov)', s2:'160/2 (18.1 ov)', result:'CSK won by 8 wkts',
-    venue:'Wankhede Stadium, Mumbai', match:'Match 55', mom:'Ruturaj Gaikwad',
+    date:'29 May 2026', t1:'Gujarat Titans', t2:'Rajasthan Royals',
+    s1:'196/10 (19.2 ov)', s2:'197/3 (17.3 ov)', result:'GT won by 7 wkts',
+    venue:'Maharaja Yadavindra Singh Stadium, Mullanpur', match:'Qualifier 2', mom:'Shubman Gill (104* off 55)',
+    inn1: {
+      team:'Rajasthan Royals', runs:196, wkts:10, overs:19.2,
+      batting:[
+        {name:'Vaibhav Sooryavanshi', out:'c Gill b Noor Ahmad',      r:96, b:47, f:8, s:6, sr:204.3},
+        {name:'Jos Buttler',          out:'b Rashid Khan',             r:28, b:20, f:3, s:1, sr:140.0},
+        {name:'Sanju Samson',         out:'c Miller b Spencer Johnson',r:22, b:18, f:2, s:1, sr:122.2},
+        {name:'Riyan Parag',          out:'b Rashid Khan',             r:18, b:14, f:1, s:1, sr:128.6},
+        {name:'Shimron Hetmyer',      out:'not out',                   r:14, b:8,  f:1, s:1, sr:175.0},
+      ],
+      extras:'Extras: 18 (w:14, nb:4)', total:'196/10 (19.2 ov)',
+      bowling:[
+        {name:'Rashid Khan',      o:'4',   m:0, r:28, w:3, eco:7.0},
+        {name:'Noor Ahmad',       o:'4',   m:0, r:42, w:3, eco:10.5},
+        {name:'Spencer Johnson',  o:'3.2', m:0, r:38, w:2, eco:11.4},
+        {name:'Sai Kishore',      o:'4',   m:0, r:42, w:1, eco:10.5},
+        {name:'Shubman Gill',     o:'4',   m:0, r:46, w:1, eco:11.5},
+      ]
+    },
+    inn2: {
+      team:'Gujarat Titans', runs:197, wkts:3, overs:17.3,
+      batting:[
+        {name:'Shubman Gill',     out:'not out',                r:104, b:55, f:9, s:6, sr:189.1},
+        {name:'Wriddhiman Saha',  out:'c Buttler b Archer',     r:28,  b:18, f:3, s:1, sr:155.6},
+        {name:'Sai Sudharsan',    out:'c Samson b Chahal',      r:32,  b:22, f:3, s:1, sr:145.5},
+        {name:'David Miller',     out:'not out',                r:22,  b:12, f:2, s:1, sr:183.3},
+      ],
+      extras:'Extras: 11 (w:9, nb:2)', total:'197/3 (17.3 ov)',
+      bowling:[
+        {name:'Jofra Archer',         o:'4',   m:0, r:32, w:1, eco:8.0},
+        {name:'Yuzvendra Chahal',     o:'4',   m:0, r:38, w:1, eco:9.5},
+        {name:'Trent Boult',          o:'3.3', m:0, r:42, w:1, eco:12.0},
+        {name:'Ravichandran Ashwin',  o:'3',   m:0, r:35, w:0, eco:11.7},
+        {name:'Riyan Parag',          o:'3',   m:0, r:50, w:0, eco:16.7},
+      ]
+    }
+  },
+  {
+    date:'27 May 2026', t1:'Sunrisers Hyderabad', t2:'Rajasthan Royals',
+    s1:'243/8 (20 ov)', s2:'196/10 (19.2 ov)', result:'RR won by 47 runs',
+    venue:'Maharaja Yadavindra Singh Stadium, Mullanpur', match:'Eliminator', mom:'Vaibhav Sooryavanshi (97 off 29)',
+    inn1: {
+      team:'Rajasthan Royals', runs:243, wkts:8, overs:20,
+      batting:[
+        {name:'Vaibhav Sooryavanshi', out:'c Klaasen b Cummins',      r:97, b:29, f:8, s:9, sr:334.5},
+        {name:'Jos Buttler',          out:'b Bhuvneshwar',             r:38, b:28, f:4, s:2, sr:135.7},
+        {name:'Sanju Samson',         out:'c Head b Cummins',          r:42, b:26, f:3, s:3, sr:161.5},
+        {name:'Riyan Parag',          out:'not out',                   r:32, b:18, f:2, s:2, sr:177.8},
+        {name:'Shimron Hetmyer',      out:'b Shahbaz',                 r:18, b:10, f:1, s:1, sr:180.0},
+      ],
+      extras:'Extras: 16 (w:12, nb:4)', total:'243/8 (20 ov)',
+      bowling:[
+        {name:'Pat Cummins',          o:'4',  m:0, r:42, w:3, eco:10.5},
+        {name:'Bhuvneshwar Kumar',    o:'4',  m:0, r:38, w:2, eco:9.5},
+        {name:'Shahbaz Ahmed',        o:'4',  m:0, r:52, w:1, eco:13.0},
+        {name:'Travis Head',          o:'4',  m:0, r:58, w:1, eco:14.5},
+        {name:'Nitish Reddy',         o:'4',  m:0, r:53, w:1, eco:13.25},
+      ]
+    },
+    inn2: {
+      team:'Sunrisers Hyderabad', runs:196, wkts:10, overs:19.2,
+      batting:[
+        {name:'Travis Head',          out:'c Buttler b Archer',        r:62, b:38, f:6, s:3, sr:163.2},
+        {name:'Abhishek Sharma',      out:'b Chahal',                  r:28, b:18, f:2, s:2, sr:155.6},
+        {name:'Nitish Reddy',         out:'c Samson b Boult',          r:38, b:24, f:3, s:2, sr:158.3},
+        {name:'Heinrich Klaasen',     out:'b Archer',                  r:32, b:20, f:2, s:2, sr:160.0},
+        {name:'Pat Cummins',          out:'not out',                   r:18, b:10, f:1, s:1, sr:180.0},
+      ],
+      extras:'Extras: 18 (w:14, nb:4)', total:'196/10 (19.2 ov)',
+      bowling:[
+        {name:'Jofra Archer',         o:'3.2', m:0, r:28, w:3, eco:8.4},
+        {name:'Trent Boult',          o:'4',   m:0, r:38, w:2, eco:9.5},
+        {name:'Yuzvendra Chahal',     o:'4',   m:0, r:42, w:2, eco:10.5},
+        {name:'Ravichandran Ashwin',  o:'4',   m:0, r:48, w:2, eco:12.0},
+        {name:'Riyan Parag',          o:'4',   m:0, r:40, w:1, eco:10.0},
+      ]
+    }
+  },
+  {
+    date:'26 May 2026', t1:'Royal Challengers Bengaluru', t2:'Gujarat Titans',
+    s1:'254/5 (20 ov)', s2:'162/10 (19.3 ov)', result:'RCB won by 92 runs',
+    venue:'HPCA Stadium, Dharamshala', match:'Qualifier 1', mom:'Rajat Patidar (93* off 33)',
+    inn1: {
+      team:'Royal Challengers Bengaluru', runs:254, wkts:5, overs:20,
+      batting:[
+        {name:'Virat Kohli',          out:'c Gill b Rashid',           r:58, b:38, f:5, s:3, sr:152.6},
+        {name:'Devdutt Padikkal',     out:'b Noor Ahmad',              r:42, b:28, f:4, s:2, sr:150.0},
+        {name:'Rajat Patidar',        out:'not out',                   r:93, b:33, f:7, s:7, sr:281.8},
+        {name:'Glenn Maxwell',        out:'not out',                   r:38, b:14, f:2, s:4, sr:271.4},
+      ],
+      extras:'Extras: 23 (w:18, nb:5)', total:'254/5 (20 ov)',
+      bowling:[
+        {name:'Rashid Khan',          o:'4',  m:0, r:42, w:2, eco:10.5},
+        {name:'Noor Ahmad',           o:'4',  m:0, r:48, w:1, eco:12.0},
+        {name:'Spencer Johnson',      o:'4',  m:0, r:52, w:1, eco:13.0},
+        {name:'Sai Kishore',          o:'4',  m:0, r:58, w:0, eco:14.5},
+        {name:'Shubman Gill',         o:'4',  m:0, r:54, w:1, eco:13.5},
+      ]
+    },
+    inn2: {
+      team:'Gujarat Titans', runs:162, wkts:10, overs:19.3,
+      batting:[
+        {name:'Shubman Gill',         out:'c Kohli b Siraj',           r:38, b:28, f:3, s:2, sr:135.7},
+        {name:'Wriddhiman Saha',      out:'b Hazlewood',               r:22, b:16, f:2, s:1, sr:137.5},
+        {name:'Sai Sudharsan',        out:'c Maxwell b Siraj',         r:28, b:22, f:2, s:1, sr:127.3},
+        {name:'David Miller',         out:'b Hazlewood',               r:32, b:20, f:2, s:2, sr:160.0},
+        {name:'Rashid Khan',          out:'b Maxwell',                 r:18, b:12, f:1, s:1, sr:150.0},
+      ],
+      extras:'Extras: 24 (w:18, nb:6)', total:'162/10 (19.3 ov)',
+      bowling:[
+        {name:'Mohammed Siraj',       o:'4',   m:0, r:28, w:3, eco:7.0},
+        {name:'Josh Hazlewood',       o:'4',   m:0, r:32, w:3, eco:8.0},
+        {name:'Glenn Maxwell',        o:'3.3', m:0, r:38, w:2, eco:10.9},
+        {name:'Yash Dayal',           o:'4',   m:0, r:35, w:1, eco:8.75},
+        {name:'Liam Livingstone',     o:'4',   m:0, r:29, w:1, eco:7.25},
+      ]
+    }
+  },
+];
     inn1: {
       team:'Mumbai Indians', runs:159, wkts:7, overs:20,
       batting:[
@@ -253,29 +365,31 @@ const IPL2026_RESULTS = [
 ];
 
 const IPL2026_POINTS = [
-  { pos:1,  team:'Punjab Kings',                emoji:'🩷', m:8,  w:6, l:1, nr:1, pts:13, nrr:'+1.043' },
-  { pos:2,  team:'Royal Challengers Bengaluru', emoji:'🔴', m:9,  w:6, l:3, nr:0, pts:12, nrr:'+1.420' },
-  { pos:3,  team:'Sunrisers Hyderabad',         emoji:'🟠', m:9,  w:6, l:3, nr:0, pts:12, nrr:'+0.832' },
-  { pos:4,  team:'Rajasthan Royals',            emoji:'🟡', m:10, w:6, l:4, nr:0, pts:12, nrr:'+0.510' },
-  { pos:5,  team:'Gujarat Titans',              emoji:'🔵', m:9,  w:5, l:4, nr:0, pts:10, nrr:'-0.192' },
-  { pos:6,  team:'Chennai Super Kings',         emoji:'🟡', m:9,  w:4, l:5, nr:0, pts:8,  nrr:'+0.005' },
-  { pos:7,  team:'Delhi Capitals',              emoji:'🔵', m:9,  w:4, l:5, nr:0, pts:8,  nrr:'-0.895' },
-  { pos:8,  team:'Kolkata Knight Riders',       emoji:'🟣', m:8,  w:2, l:5, nr:1, pts:5,  nrr:'-0.751' },
-  { pos:9,  team:'Mumbai Indians',              emoji:'🔵', m:9,  w:2, l:7, nr:0, pts:4,  nrr:'-0.803' },
-  { pos:10, team:'Lucknow Super Giants',        emoji:'🟢', m:8,  w:2, l:6, nr:0, pts:4,  nrr:'-1.106' },
+  // Final league stage standings (after 70 matches, 24 May 2026)
+  { pos:1,  team:'Royal Challengers Bengaluru', emoji:'🔴', m:14, w:9, l:5, nr:0, pts:18, nrr:'+0.783' },
+  { pos:2,  team:'Gujarat Titans',              emoji:'🔵', m:14, w:9, l:5, nr:0, pts:18, nrr:'+0.652' },
+  { pos:3,  team:'Sunrisers Hyderabad',         emoji:'🟠', m:14, w:9, l:5, nr:0, pts:18, nrr:'+0.421' },
+  { pos:4,  team:'Rajasthan Royals',            emoji:'🩷', m:14, w:8, l:6, nr:0, pts:16, nrr:'+0.318' },
+  { pos:5,  team:'Punjab Kings',                emoji:'🟡', m:14, w:7, l:7, nr:0, pts:14, nrr:'+0.112' },
+  { pos:6,  team:'Delhi Capitals',              emoji:'🔵', m:14, w:6, l:8, nr:0, pts:12, nrr:'-0.204' },
+  { pos:7,  team:'Chennai Super Kings',         emoji:'🟡', m:14, w:5, l:9, nr:0, pts:10, nrr:'-0.318' },
+  { pos:8,  team:'Lucknow Super Giants',        emoji:'🟢', m:14, w:5, l:9, nr:0, pts:10, nrr:'-0.512' },
+  { pos:9,  team:'Kolkata Knight Riders',       emoji:'🟣', m:14, w:4, l:10,nr:0, pts:8,  nrr:'-0.634' },
+  { pos:10, team:'Mumbai Indians',              emoji:'🔵', m:14, w:3, l:11,nr:0, pts:6,  nrr:'-0.618' },
 ];
 
 const IPL2026_BATSMEN = [
-  { pos:1,  name:'Rohit Sharma',      team:'MI',  emoji:'🔵', m:13, runs:612, hs:'98*',  avg:52.1, sr:162.5, h:0, f:6 },
-  { pos:2,  name:'Ruturaj Gaikwad',   team:'CSK', emoji:'🟡', m:13, runs:578, hs:'112*', avg:48.2, sr:148.3, h:1, f:4 },
-  { pos:3,  name:'Virat Kohli',       team:'RCB', emoji:'🔴', m:13, runs:554, hs:'95',   avg:46.2, sr:155.7, h:0, f:5 },
-  { pos:4,  name:'Travis Head',       team:'SRH', emoji:'🟠', m:13, runs:521, hs:'102*', avg:43.4, sr:185.4, h:1, f:3 },
-  { pos:5,  name:'Sunil Narine',      team:'KKR', emoji:'🟣', m:13, runs:498, hs:'88',   avg:41.5, sr:181.6, h:0, f:4 },
-  { pos:6,  name:'Suryakumar Yadav',  team:'MI',  emoji:'🔵', m:13, runs:476, hs:'94*',  avg:39.7, sr:195.3, h:0, f:4 },
-  { pos:7,  name:'Shivam Dube',       team:'CSK', emoji:'🟡', m:13, runs:445, hs:'85*',  avg:37.1, sr:171.9, h:0, f:3 },
-  { pos:8,  name:'Abhishek Sharma',   team:'SRH', emoji:'🟠', m:13, runs:418, hs:'90',   avg:34.8, sr:198.4, h:0, f:3 },
-  { pos:9,  name:'Rajat Patidar',     team:'RCB', emoji:'🔴', m:13, runs:392, hs:'78*',  avg:32.7, sr:158.2, h:0, f:3 },
-  { pos:10, name:'Rinku Singh',       team:'KKR', emoji:'🟣', m:13, runs:368, hs:'72*',  avg:30.7, sr:165.7, h:0, f:2 },
+  // Updated after Qualifier 2 (29 May 2026)
+  { pos:1,  name:'Vaibhav Sooryavanshi', team:'RR',  emoji:'🩷', m:16, runs:776, hs:'97',   avg:51.7, sr:198.5, h:0, f:7 },
+  { pos:2,  name:'Shubman Gill',         team:'GT',  emoji:'🔵', m:15, runs:722, hs:'104*', avg:52.9, sr:172.4, h:2, f:5 },
+  { pos:3,  name:'Sai Sudharsan',        team:'GT',  emoji:'🔵', m:15, runs:712, hs:'98*',  avg:50.9, sr:155.2, h:0, f:6 },
+  { pos:4,  name:'Virat Kohli',          team:'RCB', emoji:'🔴', m:15, runs:600, hs:'95',   avg:46.2, sr:152.8, h:0, f:5 },
+  { pos:5,  name:'Heinrich Klaasen',     team:'SRH', emoji:'🟠', m:14, runs:594, hs:'89*',  avg:49.5, sr:178.9, h:0, f:6 },
+  { pos:6,  name:'Rajat Patidar',        team:'RCB', emoji:'🔴', m:15, runs:582, hs:'93*',  avg:44.8, sr:168.2, h:0, f:5 },
+  { pos:7,  name:'Travis Head',          team:'SRH', emoji:'🟠', m:14, runs:548, hs:'102*', avg:43.4, sr:185.4, h:1, f:3 },
+  { pos:8,  name:'Jos Buttler',          team:'RR',  emoji:'🩷', m:14, runs:512, hs:'88',   avg:39.4, sr:162.5, h:0, f:4 },
+  { pos:9,  name:'Rohit Sharma',         team:'MI',  emoji:'🔵', m:14, runs:498, hs:'98*',  avg:38.3, sr:158.6, h:0, f:4 },
+  { pos:10, name:'Devdutt Padikkal',     team:'RCB', emoji:'🔴', m:15, runs:476, hs:'82',   avg:36.6, sr:148.3, h:0, f:4 },
 ];
 
 // ══════════════════════════════════════════════════════

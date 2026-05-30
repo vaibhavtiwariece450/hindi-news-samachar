@@ -143,7 +143,7 @@
         <div class="live-match-card">
           <div class="lmc-header">
             <span class="live-pill">🔴 LIVE</span>
-            <span class="lmc-match" id="lmc-match">Match 64 • 10 May 2026 • 3:30 PM IST</span>
+            <span class="lmc-match" id="lmc-match">FINAL 🏆 • 31 May 2026 • 7:30 PM IST</span>
             <button class="lmc-refresh-btn" onclick="refreshLiveScore()">🔄</button>
           </div>
 
@@ -156,15 +156,15 @@
             </div>
             <div class="lmc-vs">VS</div>
             <div class="lmc-team right">
-              <div class="lmc-team-name" id="lmc-t2">🟣 Kolkata Knight Riders</div>
+              <div class="lmc-team-name" id="lmc-t2">🔵 Gujarat Titans</div>
               <div class="lmc-score" id="kkr-score">—</div>
               <div class="lmc-overs" id="kkr-overs"></div>
             </div>
           </div>
 
           <!-- Match Status -->
-          <div class="lmc-status" id="lmc-status">⏳ मैच 3:30 PM IST पर शुरू होगा</div>
-          <div class="lmc-venue" id="lmc-venue">📍 M. Chinnaswamy Stadium, Bengaluru</div>
+          <div class="lmc-status" id="lmc-status">⏳ FINAL कल — 31 May 2026 • 7:30 PM IST</div>
+          <div class="lmc-venue" id="lmc-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
           <!-- Hidden score elements used by live fetch functions -->
           <div id="score-srh-kkr" style="display:none"></div>
           <div id="score-gt-pbks" style="display:none"></div>
@@ -200,9 +200,10 @@
         <div class="prev-result-card">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
             <div>
-              <span class="sch-badge" style="background:#27ae60;color:white">✅ Match 57 — 3 May 2026</span>
-              <div style="font-size:15px;font-weight:bold;margin-top:6px">🔵 GT vs 🩷 PBKS</div>
-              <div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px">🏆 GT won — Holder & Washington star in nervy last-over win</div>
+              <span class="sch-badge" style="background:#27ae60;color:white">✅ Qualifier 2 — 29 May 2026</span>
+              <div style="font-size:15px;font-weight:bold;margin-top:6px">🔵 GT vs 🩷 RR</div>
+              <div style="font-size:13px;margin:4px 0">🏏 RR: 196/10 (19.2 ov) &nbsp;|&nbsp; GT: 197/3 (17.3 ov)</div>
+              <div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px">🏆 GT won by 7 wkts — Shubman Gill 104*(55)</div>
             </div>
             <button class="scorecard-btn" style="width:auto;padding:8px 16px" onclick="openScorecard(0)">📋 Scorecard</button>
           </div>
@@ -244,7 +245,7 @@
       <!-- PLAYOFFS / SEMIFINALS PANEL -->
       <div class="sec-panel hidden" id="sec-playoffs">
         <div class="playoffs-bracket">
-          <h4 class="bracket-title">🌟 IPL 2026 — Playoffs Schedule</h4>
+          <h4 class="bracket-title">🌟 IPL 2026 — Playoffs</h4>
 
           <div class="playoff-info">
             📌 Top 4 teams qualify → #1 vs #2 (Qualifier 1) | #3 vs #4 (Eliminator) → Qualifier 2 → Final
@@ -254,53 +255,53 @@
 
             <div class="bracket-card qualifier">
               <div class="bracket-label">🏆 Qualifier 1</div>
-              <div class="bracket-date">📅 20 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-date">📅 26 May 2026 • 7:30 PM IST</div>
               <div class="bracket-teams">
-                <div class="bt">🧑 Team #1 <span class="bt-pos">TBD</span></div>
+                <div class="bt">🔴 Royal Challengers Bengaluru <span class="bt-pos">#1</span></div>
                 <div class="bt-vs">VS</div>
-                <div class="bt">🧑 Team #2 <span class="bt-pos">TBD</span></div>
+                <div class="bt">🔵 Gujarat Titans <span class="bt-pos">#2</span></div>
               </div>
-              <div class="bracket-venue">📍 Eden Gardens, Kolkata</div>
-              <div class="bracket-note">Winner → Final | Loser → Qualifier 2</div>
-              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+              <div class="bracket-venue">📍 HPCA Stadium, Dharamshala</div>
+              <div class="bracket-note">RCB 254/5 beat GT 162 all out by 92 runs</div>
+              <span class="sch-badge" style="background:#27ae60;color:white">✅ RCB जीते — Final में</span>
             </div>
 
             <div class="bracket-card eliminator">
               <div class="bracket-label">❌ Eliminator</div>
-              <div class="bracket-date">📅 21 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-date">📅 27 May 2026 • 7:30 PM IST</div>
               <div class="bracket-teams">
-                <div class="bt">🧑 Team #3 <span class="bt-pos">TBD</span></div>
+                <div class="bt">🟠 Sunrisers Hyderabad <span class="bt-pos">#3</span></div>
                 <div class="bt-vs">VS</div>
-                <div class="bt">🧑 Team #4 <span class="bt-pos">TBD</span></div>
+                <div class="bt">🩷 Rajasthan Royals <span class="bt-pos">#4</span></div>
               </div>
-              <div class="bracket-venue">📍 MA Chidambaram Stadium, Chennai</div>
-              <div class="bracket-note">Winner → Qualifier 2 | Loser → Out</div>
-              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+              <div class="bracket-venue">📍 Maharaja Yadavindra Singh Stadium, Mullanpur</div>
+              <div class="bracket-note">RR 243/8 beat SRH 196 by 47 runs — Sooryavanshi 97(29)</div>
+              <span class="sch-badge" style="background:#27ae60;color:white">✅ RR जीते — Qualifier 2 में</span>
             </div>
 
             <div class="bracket-card qualifier">
               <div class="bracket-label">🏆 Qualifier 2</div>
-              <div class="bracket-date">📅 23 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-date">📅 29 May 2026 • 7:30 PM IST</div>
               <div class="bracket-teams">
-                <div class="bt">🧑 Q1 Loser <span class="bt-pos">TBD</span></div>
+                <div class="bt">🔵 Gujarat Titans <span class="bt-pos">Q1 Loser</span></div>
                 <div class="bt-vs">VS</div>
-                <div class="bt">🧑 Eliminator Winner <span class="bt-pos">TBD</span></div>
+                <div class="bt">🩷 Rajasthan Royals <span class="bt-pos">Elim. Winner</span></div>
               </div>
-              <div class="bracket-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
-              <div class="bracket-note">Winner → Final</div>
-              <span class="sch-badge upcoming-badge">⏳ आने वाला</span>
+              <div class="bracket-venue">📍 Maharaja Yadavindra Singh Stadium, Mullanpur</div>
+              <div class="bracket-note">GT 197/3 chased RR 196 — Shubman Gill 104*(55)</div>
+              <span class="sch-badge" style="background:#27ae60;color:white">✅ GT जीते — Final में</span>
             </div>
 
             <div class="bracket-card final">
               <div class="bracket-label">🏆🏆 IPL 2026 FINAL</div>
-              <div class="bracket-date">📅 26 May 2026 • 7:30 PM IST</div>
+              <div class="bracket-date">📅 31 May 2026 • 7:30 PM IST</div>
               <div class="bracket-teams">
-                <div class="bt">🏆 Q1 Winner <span class="bt-pos">TBD</span></div>
+                <div class="bt">🔴 Royal Challengers Bengaluru <span class="bt-pos">Q1 Winner</span></div>
                 <div class="bt-vs">VS</div>
-                <div class="bt">🏆 Q2 Winner <span class="bt-pos">TBD</span></div>
+                <div class="bt">🔵 Gujarat Titans <span class="bt-pos">Q2 Winner</span></div>
               </div>
-              <div class="bracket-venue">📍 Eden Gardens, Kolkata</div>
-              <span class="sch-badge final-badge">🏆 GRAND FINAL</span>
+              <div class="bracket-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
+              <span class="sch-badge final-badge" style="animation:pulse 1.5s infinite">🔴 LIVE कल — 31 May 2026</span>
             </div>
 
           </div>
@@ -309,7 +310,7 @@
 
       <!-- POINTS TABLE PANEL -->
       <div class="sec-panel hidden" id="sec-points">
-        <h4 class="bracket-title">📊 IPL 2026 — प्वाइंट्स टेबल (55 मैच के बाद — 2 May 2026)</h4>
+        <h4 class="bracket-title">📊 IPL 2026 — प्वाइंट्स टेबल (लीग स्टेज — 70 मैच के बाद, 24 May 2026)</h4>
         <div class="table-wrap">
           <table class="points-table">
             <thead>
