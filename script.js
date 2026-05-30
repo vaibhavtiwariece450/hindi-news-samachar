@@ -1,4 +1,30 @@
 // ══════════════════════════════════════════════════════
+//  XSS SANITIZATION HELPER
+// ══════════════════════════════════════════════════════
+
+/**
+ * Sanitize untrusted text before inserting into innerHTML.
+ * Escapes HTML special characters to prevent XSS from RSS feed content.
+ */
+function sanitizeText(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/**
+ * Sanitize a URL — only allow http/https to prevent javascript: injection.
+ */
+function sanitizeUrl(url) {
+  try {
+    const u = new URL(url);
+    return (u.protocol === 'https:' || u.protocol === 'http:') ? url : '#';
+  } catch {
+    return '#';
+  }
+}
+
+// ══════════════════════════════════════════════════════
 //  IPL 2026 DATA
 // ══════════════════════════════════════════════════════
 const IPL2026_SCHEDULE = [
@@ -309,13 +335,16 @@ async function refreshLiveScore() {
         document.getElementById('kkr-overs').textContent = `(${scores[1].overs} ov)`;
       }
 
-      document.getElementById('lmc-status').textContent = title;
+      // Sanitize before inserting into DOM
+      const safeTitle = sanitizeText(title);
+      const safeDesc  = sanitizeText(desc);
+
+      document.getElementById('lmc-status').textContent = safeTitle;
       document.getElementById('lmc-status').style.color = '#f9ca24';
 
-      // Show title as batsmen info if no structured data
       document.getElementById('live-batsmen').innerHTML =
-        `<tr><td colspan="6" style="color:white;text-align:left;padding:8px">📰 ${title}</td></tr>
-         ${desc ? `<tr><td colspan="6" style="color:#aaa;font-size:12px;text-align:left;padding:4px 8px">${desc.substring(0,200)}</td></tr>` : ''}`;
+        `<tr><td colspan="6" style="color:white;text-align:left;padding:8px">📰 ${safeTitle}</td></tr>
+         ${safeDesc ? `<tr><td colspan="6" style="color:#aaa;font-size:12px;text-align:left;padding:4px 8px">${safeDesc.substring(0,200)}</td></tr>` : ''}`;
 
       document.getElementById('live-bowler').innerHTML =
         `<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">🔄 अपडेट के लिए रिफ्रेश करें</td></tr>`;
@@ -332,6 +361,7 @@ async function refreshLiveScore() {
         '<tr><td colspan="5" style="color:#aaa;text-align:center;padding:8px">⏳ मैच शुरू होने का इंतजार करें</td></tr>';
     }
 
+    // Fix: update the single correct last-updated element
     const lu = document.getElementById('last-updated');
     if (lu) lu.textContent = 'अपडेट: ' + new Date().toLocaleTimeString('hi-IN');
 
@@ -343,10 +373,13 @@ async function refreshLiveScore() {
 }
 
 // Today's match — auto-detect from schedule
+// Uses a locale-independent date format to avoid locale mismatch bugs
 function getTodayMatch() {
   const today = new Date();
   const dd = today.getDate();
-  const mm  = today.toLocaleString('en-IN', { month: 'long' });
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  const mm  = MONTHS[today.getMonth()];
   const yy  = today.getFullYear();
   const todayStr = `${dd} ${mm} ${yy}`;
   return IPL2026_SCHEDULE.filter(m => m.date === todayStr);
@@ -364,6 +397,9 @@ function updateLiveMatchHeader() {
   if (el('lmc-status')) el('lmc-status').textContent = matches.length > 0
     ? `⏳ मैच ${m.time} IST पर शुरू होगा`
     : `⏳ अगला मैच: ${m.date} • ${m.time} IST`;
+  // Update commentary modal title dynamically
+  if (el('comm-modal-match-title'))
+    el('comm-modal-match-title').textContent = `${m.t1} vs ${m.t2} • ${m.match} • ${m.date}`;
   // Store keywords for RSS matching
   window._todayT1 = m.t1.toLowerCase();
   window._todayT2 = m.t2.toLowerCase();
@@ -410,13 +446,14 @@ async function loadCommentary() {
       feedEl.innerHTML = items.length === 0
         ? '<div style="color:#aaa;padding:10px">⏳ अभी कोई लाइव अपडेट नहीं — मैच शुरू होने पर कमेंट्री आएगी</div>'
         : items.map(i => {
-            const t    = i.title || '';
-            const desc = (i.description || '').replace(/<[^>]+>/g, '');
-            const link = i.link || '#';
+            // Fix: sanitize all RSS content before injecting into innerHTML
+            const t    = sanitizeText(i.title || '');
+            const desc = sanitizeText((i.description || '').replace(/<[^>]+>/g, ''));
+            const link = sanitizeUrl(i.link || '#');
             const pub  = i.pubDate ? new Date(i.pubDate).toLocaleTimeString('hi-IN', {hour:'2-digit', minute:'2-digit'}) : '';
-            const isSRHKKR = /(srh|kkr|sunrisers|kolkata)/i.test(t);
+            const isSRHKKR = /(srh|kkr|sunrisers|kolkata)/i.test(i.title || '');
             const cls  = isSRHKKR ? 'six' : '';
-            return `<div class="ball-item ${cls}" style="cursor:pointer;margin-bottom:8px" onclick="window.open('${link}','_blank')">
+            return `<div class="ball-item ${cls}" style="cursor:pointer;margin-bottom:8px" onclick="window.open('${link}','_blank','noopener,noreferrer')">
               <span class="ball-badge">${isSRHKKR ? '🔴' : '📰'}</span>
               <span>
                 <strong>${pub}</strong> ${t}
@@ -438,6 +475,7 @@ async function loadCommentary() {
 // ══════════════════════════════════════════════════════
 
 let liveRefreshTimer = null;
+let espnRefreshTimer = null;  // Fix: store so it can be cleared
 let lastScoreText = '';
 
 // Multiple RSS sources for live IPL scores
@@ -449,8 +487,9 @@ const SCORE_FEEDS = [
 
 function startLiveRefresh() {
   clearInterval(liveRefreshTimer);
+  clearInterval(espnRefreshTimer);  // Fix: clear the previously leaked interval
   liveRefreshTimer = setInterval(fetchLiveScore2s, 2000);
-  setInterval(fetchLiveFromESPN, 30000);
+  espnRefreshTimer = setInterval(fetchLiveFromESPN, 30000);
 }
 
 async function fetchLiveScore2s() {
@@ -584,21 +623,21 @@ async function fetchLiveFromESPN() {
 
       // Render feed
       feedEl.innerHTML = iplItems.slice(0, 12).map(item => {
-        const title = getField(item, 'title');
-        const link  = getField(item, 'link');
+        const title = sanitizeText(getField(item, 'title'));
+        const link  = sanitizeUrl(getField(item, 'link'));
         const pub   = getField(item, 'pubDate');
-        const desc  = getField(item, 'description').replace(/<[^>]+>/g, '').substring(0, 150);
+        const desc  = sanitizeText(getField(item, 'description').replace(/<[^>]+>/g, '').substring(0, 150));
         const time  = pub ? new Date(pub).toLocaleString('en-IN',
           { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : '';
-        const score   = extractScore(title + ' ' + desc);
-        const isMatch = title.toLowerCase().includes('win') ||
-                        title.toLowerCase().includes('beat') ||
-                        title.toLowerCase().includes('star') ||
+        const score   = extractScore(getField(item, 'title') + ' ' + getField(item, 'description'));
+        const isMatch = getField(item, 'title').toLowerCase().includes('win') ||
+                        getField(item, 'title').toLowerCase().includes('beat') ||
+                        getField(item, 'title').toLowerCase().includes('star') ||
                         score !== null;
-        return `<div class="espn-item ${isMatch ? 'live-score' : ''}" onclick="window.open('${link}','_blank')">
-          <div class="espn-time">${isMatch ? '🏏 ' : '📰 '}${time}</div>
+        return `<div class="espn-item${isMatch ? ' live-score' : ''}" onclick="window.open('${link}','_blank','noopener,noreferrer')">
+          <div class="espn-time">${time}</div>
           <div class="espn-title">${title}</div>
-          ${score ? `<div class="espn-score">🏏 ${score}</div>` : ''}
+          ${score ? `<div class="espn-score">🏏 ${sanitizeText(score)}</div>` : ''}
           ${desc ? `<div style="font-size:12px;color:#666;margin-top:3px">${desc}...</div>` : ''}
         </div>`;
       }).join('');
@@ -607,7 +646,7 @@ async function fetchLiveFromESPN() {
       const ticker = document.querySelector('.ticker span');
       if (ticker) {
         ticker.innerHTML = iplItems.slice(0, 5)
-          .map(i => getField(i, 'title')).filter(Boolean)
+          .map(i => sanitizeText(getField(i, 'title'))).filter(Boolean)
           .join(' &nbsp;|&nbsp; ');
       }
     }
@@ -617,6 +656,8 @@ async function fetchLiveFromESPN() {
     if (btn) { btn.textContent = '🔄 रिफ्रेश'; btn.disabled = false; }
     const lu = document.getElementById('last-updated');
     if (lu) lu.textContent = 'ESPN: ' + new Date().toLocaleTimeString('hi-IN');
+    const lu2 = document.getElementById('ipl-last-updated');
+    if (lu2) lu2.textContent = 'ESPN: ' + new Date().toLocaleTimeString('hi-IN');
   }
 }
 
@@ -767,7 +808,8 @@ function switchInnings(id, btn) {
 function showComm(idx, btn) {
   document.querySelectorAll('.comm-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('[id^="comm-"]').forEach(c => c.classList.add('hidden'));
+  // Fix: only target commentary list divs, not the modal (which also starts with "comm-")
+  document.querySelectorAll('.commentary-list[id^="comm-"]').forEach(c => c.classList.add('hidden'));
   document.getElementById('comm-' + idx).classList.remove('hidden');
 }
 
@@ -819,14 +861,44 @@ window.addEventListener('DOMContentLoaded', () => {
   startLiveRefresh();
   startDashboardRefresh();
 
-  // 5. Newsletter
+  // 5. Newsletter — replace alert with inline confirmation
   document.querySelector('.newsletter button').addEventListener('click', () => {
     const input = document.querySelector('.newsletter input');
+    const btn   = document.querySelector('.newsletter button');
     if (input.value.includes('@')) {
-      alert('✅ सफलतापूर्वक सब्सक्राइब किया गया!\nधन्यवाद, ' + input.value);
+      btn.textContent = '✅ सब्सक्राइब!';
+      btn.style.background = '#27ae60';
+      btn.disabled = true;
       input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'सब्सक्राइब';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3000);
     } else {
-      alert('⚠️ कृपया एक वैध ईमेल पता दर्ज करें।');
+      input.style.border = '2px solid #e74c3c';
+      input.placeholder = '⚠️ वैध ईमेल डालें';
+      setTimeout(() => {
+        input.style.border = '';
+        input.placeholder = 'आपका ईमेल';
+      }, 2000);
+    }
+  });
+
+  // 6. Fix: wire up search input with addEventListener instead of inline oninput
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => searchNews(searchInput.value));
+  }
+
+  // 7. Init poll state from localStorage
+  initPoll();
+
+  // 8. Keyboard: close modals with Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeScorecard();
+      closeCommentary();
     }
   });
 });
@@ -837,7 +909,7 @@ function updateDateTime() {
 }
 
 // ══════════════════════════════════════════════════════
-//  LOAD NEWS FROM news.json
+//  LOAD NEWS FROM news.json — with pagination & error state
 // ══════════════════════════════════════════════════════
 
 const CAT_LABELS = {
@@ -849,33 +921,65 @@ const CAT_LABELS = {
   business:   { label: 'व्यापार',   cls: 'yellow' },
 };
 
+let allNews = [];
+let newsPage = 1;
+const NEWS_PER_PAGE = 6;
+
 async function loadNewsFromJSON() {
   try {
-    const res  = await fetch('news.json?t=' + Date.now());
-    const news = await res.json();
+    const res = await fetch('news.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allNews = await res.json();
     const grid = document.getElementById('news-grid');
-    if (!grid || !news.length) return;
-
-    grid.innerHTML = news.map(n => {
-      const cat = CAT_LABELS[n.category] || { label: n.category, cls: '' };
-      return `
-        <article class="news-card" data-cat="${n.category}">
-          <img src="${n.image}" alt="" onerror="this.src='https://picsum.photos/seed/${n.category}/400/220'"/>
-          <div class="card-body">
-            <span class="category-tag ${cat.cls}">${cat.label}</span>
-            <h3>${n.title}</h3>
-            <p>${n.description}</p>
-            <div class="card-footer">
-              <span>✍️ ${n.author}</span>
-              <span>⏰ ${n.time}</span>
-            </div>
-          </div>
-        </article>`;
-    }).join('');
-
+    if (!grid || !allNews.length) return;
+    newsPage = 1;
+    renderNewsPage();
   } catch(e) {
     console.warn('news.json load failed:', e.message);
+    const grid = document.getElementById('news-grid');
+    if (grid) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#888">
+        ⚠️ समाचार लोड नहीं हो सके। कृपया पेज रिफ्रेश करें।
+      </div>`;
+    }
+    const btn = document.getElementById('load-more-btn');
+    if (btn) btn.style.display = 'none';
   }
+}
+
+function renderNewsPage() {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+  const end     = newsPage * NEWS_PER_PAGE;
+  const visible = allNews.slice(0, end);
+
+  grid.innerHTML = visible.map(n => {
+    const cat = CAT_LABELS[n.category] || { label: n.category, cls: '' };
+    return `
+      <article class="news-card" data-cat="${n.category}">
+        <img src="${n.image}" alt="${sanitizeText(n.title)}" loading="lazy"
+             onerror="this.src='https://picsum.photos/seed/${n.category}/400/220'"/>
+        <div class="card-body">
+          <span class="category-tag ${cat.cls}">${cat.label}</span>
+          <h3>${sanitizeText(n.title)}</h3>
+          <p>${sanitizeText(n.description)}</p>
+          <div class="card-footer">
+            <span>✍️ ${sanitizeText(n.author)}</span>
+            <span>⏰ ${sanitizeText(n.time)}</span>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+
+  // Show/hide Load More button
+  const btn = document.getElementById('load-more-btn');
+  if (btn) btn.style.display = end >= allNews.length ? 'none' : 'inline-block';
+}
+
+// Real pagination — replaces the old alert() stub
+function loadMoreNews() {
+  newsPage++;
+  renderNewsPage();
 }
 
 function filterNews(cat, btn) {
@@ -923,15 +1027,30 @@ function showWeather(city, btn) {
 }
 
 // ══════════════════════════════════════════════════════
-//  POLL
+//  POLL — with localStorage persistence
 // ══════════════════════════════════════════════════════
 
-const pollVotes = [120, 95, 60, 45];
+// Fix: load saved votes from localStorage, fall back to defaults
+const DEFAULT_VOTES = [120, 95, 60, 45];
+const pollVotes = JSON.parse(localStorage.getItem('poll_votes') || 'null') || [...DEFAULT_VOTES];
 
 function vote(index) {
+  // Prevent double-voting
+  if (localStorage.getItem('poll_voted')) {
+    document.getElementById('poll-options').classList.add('hidden');
+    document.getElementById('poll-results').classList.remove('hidden');
+    renderPollResults();
+    return;
+  }
   pollVotes[index]++;
+  localStorage.setItem('poll_votes', JSON.stringify(pollVotes));
+  localStorage.setItem('poll_voted', '1');
   document.getElementById('poll-options').classList.add('hidden');
   document.getElementById('poll-results').classList.remove('hidden');
+  renderPollResults();
+}
+
+function renderPollResults() {
   const total = pollVotes.reduce((a, b) => a + b, 0);
   pollVotes.forEach((v, i) => {
     const pct = Math.round((v / total) * 100);
@@ -939,4 +1058,13 @@ function vote(index) {
     document.getElementById(`pct-${i}`).textContent = pct + '%';
   });
   document.getElementById('poll-total').textContent = `कुल ${total} वोट`;
+}
+
+// On load: if already voted, show results
+function initPoll() {
+  if (localStorage.getItem('poll_voted')) {
+    document.getElementById('poll-options').classList.add('hidden');
+    document.getElementById('poll-results').classList.remove('hidden');
+    renderPollResults();
+  }
 }

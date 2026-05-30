@@ -292,8 +292,11 @@ footer ul li a:hover { color: #e74c3c; }
 }
 .key-btn:hover { background: #d68910; }
 
+.refresh-btn {
+  background: #6c3483; color: white;
   border: none; padding: 6px 14px;
   border-radius: 20px; cursor: pointer; font-size: 13px;
+  transition: background 0.2s;
 }
 .refresh-btn:hover { background: #5b2c6f; }
 
