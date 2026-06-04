@@ -160,209 +160,6 @@ const IPL2026_RESULTS = [
     }
   },
 ];
-    inn1: {
-      team:'Mumbai Indians', runs:159, wkts:7, overs:20,
-      batting:[
-        {name:'Rohit Sharma',    out:'c Conway b Chahar',      r:28, b:22, f:3, s:1, sr:127.3},
-        {name:'Ishan Kishan',    out:'b Theekshana',           r:18, b:15, f:2, s:0, sr:120.0},
-        {name:'Suryakumar Yadav',out:'c Gaikwad b Jadeja',     r:42, b:28, f:3, s:2, sr:150.0},
-        {name:'Tilak Varma',     out:'run out',                r:31, b:24, f:2, s:1, sr:129.2},
-        {name:'Hardik Pandya',   out:'c Dhoni b Deshpande',    r:19, b:12, f:1, s:1, sr:158.3},
-        {name:'Tim David',       out:'b Chahar',               r:8,  b:7,  f:0, s:1, sr:114.3},
-        {name:'Romario Shepherd',out:'not out',                r:9,  b:6,  f:1, s:0, sr:150.0},
-        {name:'Piyush Chawla',   out:'b Theekshana',           r:0,  b:1,  f:0, s:0, sr:0.0},
-      ],
-      extras:'Extras: 4 (w:3, nb:1)', total:'159/7 (20 ov)',
-      bowling:[
-        {name:'Deepak Chahar',    o:'4',   m:0, r:32, w:2, eco:8.0},
-        {name:'Tushar Deshpande', o:'4',   m:0, r:38, w:1, eco:9.5},
-        {name:'Maheesh Theekshana',o:'4',  m:0, r:28, w:2, eco:7.0},
-        {name:'Ravindra Jadeja',  o:'4',   m:0, r:30, w:1, eco:7.5},
-        {name:'Mitchell Santner', o:'4',   m:0, r:27, w:0, eco:6.75},
-      ]
-    },
-    inn2: {
-      team:'Chennai Super Kings', runs:160, wkts:2, overs:18.1,
-      batting:[
-        {name:'Ruturaj Gaikwad',  out:'not out',               r:82, b:58, f:8, s:2, sr:141.4},
-        {name:'Devon Conway',     out:'c Rohit b Bumrah',      r:34, b:28, f:3, s:1, sr:121.4},
-        {name:'Ajinkya Rahane',   out:'c Kishan b Hardik',     r:22, b:18, f:2, s:0, sr:122.2},
-        {name:'Shivam Dube',      out:'not out',               r:18, b:10, f:1, s:1, sr:180.0},
-      ],
-      extras:'Extras: 4 (w:4)', total:'160/2 (18.1 ov)',
-      bowling:[
-        {name:'Jasprit Bumrah',   o:'4',   m:0, r:28, w:1, eco:7.0},
-        {name:'Hardik Pandya',    o:'3.1', m:0, r:32, w:1, eco:10.1},
-        {name:'Romario Shepherd', o:'4',   m:0, r:38, w:0, eco:9.5},
-        {name:'Piyush Chawla',    o:'4',   m:0, r:35, w:0, eco:8.75},
-        {name:'Kumar Kartikeya',  o:'3',   m:0, r:27, w:0, eco:9.0},
-      ]
-    }
-  },
-  {
-    date:'1 May 2026', t1:'Sunrisers Hyderabad', t2:'Rajasthan Royals',
-    s1:'183/5 (20 ov)', s2:'179/8 (20 ov)', result:'SRH won by 4 runs',
-    venue:'Rajiv Gandhi Stadium, Hyderabad', match:'Match 54', mom:'Travis Head (82 off 48)',
-    inn1: {
-      team:'Sunrisers Hyderabad', runs:183, wkts:5, overs:20,
-      batting:[
-        {name:'Travis Head',      out:'c Buttler b Chahal',    r:82, b:48, f:7, s:4, sr:170.8},
-        {name:'Abhishek Sharma',  out:'b Sandeep',             r:28, b:18, f:2, s:2, sr:155.6},
-        {name:'Nitish Reddy',     out:'c Samson b Chahal',     r:34, b:22, f:2, s:2, sr:154.5},
-        {name:'Heinrich Klaasen', out:'not out',               r:25, b:14, f:1, s:2, sr:178.6},
-        {name:'Pat Cummins',      out:'not out',               r:10, b:6,  f:1, s:0, sr:166.7},
-      ],
-      extras:'Extras: 4 (w:3, nb:1)', total:'183/5 (20 ov)',
-      bowling:[
-        {name:'Sandeep Sharma',   o:'4',  m:0, r:38, w:1, eco:9.5},
-        {name:'Yuzvendra Chahal', o:'4',  m:0, r:32, w:2, eco:8.0},
-        {name:'Trent Boult',      o:'4',  m:0, r:35, w:0, eco:8.75},
-        {name:'Riyan Parag',      o:'4',  m:0, r:42, w:1, eco:10.5},
-        {name:'Ravichandran Ashwin',o:'4',m:0, r:36, w:1, eco:9.0},
-      ]
-    },
-    inn2: {
-      team:'Rajasthan Royals', runs:179, wkts:8, overs:20,
-      batting:[
-        {name:'Yashasvi Jaiswal', out:'c Head b Cummins',      r:68, b:42, f:6, s:3, sr:161.9},
-        {name:'Jos Buttler',      out:'b Shahbaz',             r:32, b:24, f:3, s:1, sr:133.3},
-        {name:'Sanju Samson',     out:'c Klaasen b Cummins',   r:28, b:20, f:2, s:1, sr:140.0},
-        {name:'Riyan Parag',      out:'run out',               r:22, b:16, f:1, s:1, sr:137.5},
-        {name:'Shimron Hetmyer',  out:'not out',               r:18, b:10, f:1, s:1, sr:180.0},
-      ],
-      extras:'Extras: 11 (w:8, nb:3)', total:'179/8 (20 ov)',
-      bowling:[
-        {name:'Pat Cummins',      o:'4',  m:0, r:28, w:2, eco:7.0},
-        {name:'Bhuvneshwar Kumar',o:'4',  m:0, r:38, w:1, eco:9.5},
-        {name:'Shahbaz Ahmed',    o:'4',  m:0, r:32, w:2, eco:8.0},
-        {name:'Travis Head',      o:'4',  m:0, r:42, w:1, eco:10.5},
-        {name:'Nitish Reddy',     o:'4',  m:0, r:39, w:1, eco:9.75},
-      ]
-    }
-  },
-  {
-    date:'30 Apr 2026', t1:'Royal Challengers Bengaluru', t2:'Delhi Capitals',
-    s1:'201/4 (20 ov)', s2:'165/9 (20 ov)', result:'RCB won by 36 runs',
-    venue:'M. Chinnaswamy Stadium, Bengaluru', match:'Match 53', mom:'Virat Kohli (95 off 58)',
-    inn1: {
-      team:'Royal Challengers Bengaluru', runs:201, wkts:4, overs:20,
-      batting:[
-        {name:'Virat Kohli',      out:'c Axar b Kuldeep',      r:95, b:58, f:8, s:4, sr:163.8},
-        {name:'Rajat Patidar',    out:'b Mukesh Kumar',        r:48, b:32, f:4, s:2, sr:150.0},
-        {name:'Glenn Maxwell',    out:'not out',               r:38, b:18, f:2, s:3, sr:211.1},
-        {name:'Liam Livingstone', out:'not out',               r:14, b:8,  f:1, s:1, sr:175.0},
-      ],
-      extras:'Extras: 6 (w:5, nb:1)', total:'201/4 (20 ov)',
-      bowling:[
-        {name:'Mukesh Kumar',     o:'4',  m:0, r:42, w:1, eco:10.5},
-        {name:'Kuldeep Yadav',    o:'4',  m:0, r:35, w:1, eco:8.75},
-        {name:'Axar Patel',       o:'4',  m:0, r:38, w:1, eco:9.5},
-        {name:'Anrich Nortje',    o:'4',  m:0, r:48, w:0, eco:12.0},
-        {name:'Tristan Stubbs',   o:'4',  m:0, r:38, w:1, eco:9.5},
-      ]
-    },
-    inn2: {
-      team:'Delhi Capitals', runs:165, wkts:9, overs:20,
-      batting:[
-        {name:'David Warner',     out:'c Kohli b Siraj',       r:42, b:30, f:4, s:2, sr:140.0},
-        {name:'Prithvi Shaw',     out:'b Hazlewood',           r:18, b:14, f:2, s:0, sr:128.6},
-        {name:'Axar Patel',       out:'c Maxwell b Hazlewood', r:35, b:28, f:3, s:1, sr:125.0},
-        {name:'Tristan Stubbs',   out:'not out',               r:38, b:24, f:2, s:2, sr:158.3},
-        {name:'Kuldeep Yadav',    out:'b Siraj',               r:8,  b:6,  f:1, s:0, sr:133.3},
-      ],
-      extras:'Extras: 24 (w:18, nb:6)', total:'165/9 (20 ov)',
-      bowling:[
-        {name:'Mohammed Siraj',   o:'4',  m:0, r:28, w:2, eco:7.0},
-        {name:'Josh Hazlewood',   o:'4',  m:0, r:32, w:2, eco:8.0},
-        {name:'Glenn Maxwell',    o:'4',  m:0, r:38, w:2, eco:9.5},
-        {name:'Yash Dayal',       o:'4',  m:0, r:35, w:1, eco:8.75},
-        {name:'Liam Livingstone', o:'4',  m:0, r:32, w:2, eco:8.0},
-      ]
-    }
-  },
-  {
-    date:'29 Apr 2026', t1:'Kolkata Knight Riders', t2:'Punjab Kings',
-    s1:'178/6 (20 ov)', s2:'172/8 (20 ov)', result:'KKR won by 6 runs',
-    venue:'Eden Gardens, Kolkata', match:'Match 52', mom:'Sunil Narine (68 off 38)',
-    inn1: {
-      team:'Kolkata Knight Riders', runs:178, wkts:6, overs:20,
-      batting:[
-        {name:'Sunil Narine',     out:'c Bairstow b Arshdeep', r:68, b:38, f:6, s:4, sr:178.9},
-        {name:'Phil Salt',        out:'b Arshdeep',            r:22, b:16, f:2, s:1, sr:137.5},
-        {name:'Angkrish Raghuvanshi',out:'c Shashank b Harshal',r:28, b:20, f:2, s:1, sr:140.0},
-        {name:'Rinku Singh',      out:'not out',               r:38, b:22, f:2, s:2, sr:172.7},
-        {name:'Andre Russell',    out:'b Harshal',             r:12, b:8,  f:1, s:1, sr:150.0},
-      ],
-      extras:'Extras: 10 (w:8, nb:2)', total:'178/6 (20 ov)',
-      bowling:[
-        {name:'Arshdeep Singh',   o:'4',  m:0, r:28, w:2, eco:7.0},
-        {name:'Harshal Patel',    o:'4',  m:0, r:38, w:2, eco:9.5},
-        {name:'Sam Curran',       o:'4',  m:0, r:35, w:1, eco:8.75},
-        {name:'Yuzvendra Chahal', o:'4',  m:0, r:42, w:0, eco:10.5},
-        {name:'Shashank Singh',   o:'4',  m:0, r:35, w:1, eco:8.75},
-      ]
-    },
-    inn2: {
-      team:'Punjab Kings', runs:172, wkts:8, overs:20,
-      batting:[
-        {name:'Jonny Bairstow',   out:'c Salt b Narine',       r:52, b:34, f:5, s:2, sr:152.9},
-        {name:'Prabhsimran Singh',out:'b Varun',               r:28, b:20, f:2, s:1, sr:140.0},
-        {name:'Shashank Singh',   out:'c Russell b Harshit',   r:38, b:26, f:3, s:2, sr:146.2},
-        {name:'Sam Curran',       out:'not out',               r:32, b:18, f:2, s:2, sr:177.8},
-        {name:'Harshal Patel',    out:'b Narine',              r:8,  b:6,  f:1, s:0, sr:133.3},
-      ],
-      extras:'Extras: 14 (w:10, nb:4)', total:'172/8 (20 ov)',
-      bowling:[
-        {name:'Sunil Narine',     o:'4',  m:0, r:22, w:2, eco:5.5},
-        {name:'Varun Chakravarthy',o:'4', m:0, r:28, w:2, eco:7.0},
-        {name:'Andre Russell',    o:'4',  m:0, r:42, w:1, eco:10.5},
-        {name:'Harshit Rana',     o:'4',  m:0, r:38, w:2, eco:9.5},
-        {name:'Mitchell Starc',   o:'4',  m:0, r:42, w:1, eco:10.5},
-      ]
-    }
-  },
-  {
-    date:'28 Apr 2026', t1:'Gujarat Titans', t2:'Lucknow Super Giants',
-    s1:'165/7 (20 ov)', s2:'168/4 (19.2 ov)', result:'LSG won by 6 wkts',
-    venue:'Narendra Modi Stadium, Ahmedabad', match:'Match 51', mom:'KL Rahul (78* off 48)',
-    inn1: {
-      team:'Gujarat Titans', runs:165, wkts:7, overs:20,
-      batting:[
-        {name:'Shubman Gill',     out:'c Rahul b Mohsin',      r:48, b:36, f:4, s:2, sr:133.3},
-        {name:'Wriddhiman Saha',  out:'b Ravi Bishnoi',        r:22, b:18, f:2, s:0, sr:122.2},
-        {name:'Sai Sudharsan',    out:'c Stoinis b Krunal',    r:35, b:28, f:3, s:1, sr:125.0},
-        {name:'David Miller',     out:'not out',               r:38, b:22, f:2, s:2, sr:172.7},
-        {name:'Rashid Khan',      out:'b Mohsin',              r:12, b:8,  f:1, s:1, sr:150.0},
-      ],
-      extras:'Extras: 10 (w:7, nb:3)', total:'165/7 (20 ov)',
-      bowling:[
-        {name:'Mohsin Khan',      o:'4',  m:0, r:28, w:2, eco:7.0},
-        {name:'Ravi Bishnoi',     o:'4',  m:0, r:32, w:2, eco:8.0},
-        {name:'Krunal Pandya',    o:'4',  m:0, r:35, w:1, eco:8.75},
-        {name:'Marcus Stoinis',   o:'4',  m:0, r:38, w:1, eco:9.5},
-        {name:'Yash Thakur',      o:'4',  m:0, r:32, w:1, eco:8.0},
-      ]
-    },
-    inn2: {
-      team:'Lucknow Super Giants', runs:168, wkts:4, overs:19.2,
-      batting:[
-        {name:'KL Rahul',         out:'not out',               r:78, b:48, f:7, s:3, sr:162.5},
-        {name:'Quinton de Kock',  out:'c Miller b Rashid',     r:32, b:22, f:3, s:1, sr:145.5},
-        {name:'Marcus Stoinis',   out:'c Gill b Noor Ahmad',   r:28, b:18, f:2, s:1, sr:155.6},
-        {name:'Deepak Hooda',     out:'b Rashid',              r:18, b:14, f:1, s:1, sr:128.6},
-        {name:'Krunal Pandya',    out:'not out',               r:8,  b:4,  f:1, s:0, sr:200.0},
-      ],
-      extras:'Extras: 4 (w:3, nb:1)', total:'168/4 (19.2 ov)',
-      bowling:[
-        {name:'Rashid Khan',      o:'4',  m:0, r:22, w:2, eco:5.5},
-        {name:'Noor Ahmad',       o:'4',  m:0, r:32, w:1, eco:8.0},
-        {name:'Spencer Johnson',  o:'4',  m:0, r:38, w:0, eco:9.5},
-        {name:'Sai Kishore',      o:'3.2',m:0, r:28, w:1, eco:8.4},
-        {name:'Shubman Gill',     o:'4',  m:0, r:48, w:0, eco:12.0},
-      ]
-    }
-  },
-];
 
 const IPL2026_POINTS = [
   // Final league stage standings (after 70 matches, 24 May 2026)
@@ -412,7 +209,8 @@ let lastScoreText         = '';
 
 // ── Cricbuzz RapidAPI live fetch ─────────────────────
 async function fetchCricbuzzLive() {
-  const key = localStorage.getItem('rapidapi_key');
+  let key = null;
+  try { key = localStorage.getItem('rapidapi_key'); } catch(e) {}
   if (!key) return false;
 
   try {
@@ -662,7 +460,8 @@ async function refreshLiveScore() {
   if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
 
   try {
-    const key = localStorage.getItem('rapidapi_key');
+    let key = null;
+    try { key = localStorage.getItem('rapidapi_key'); } catch(e) {}
     if (key) {
       // Try Cricbuzz API first
       const ok = await fetchCricbuzzLive();
@@ -724,7 +523,7 @@ function startDashboardRefresh() {
   refreshLiveScore();
   // If API key present: refresh every 30s (Cricbuzz updates ~every 30s)
   // If no key: refresh every 60s (RSS feeds don't update faster)
-  const interval = localStorage.getItem('rapidapi_key') ? 30000 : 60000;
+  const interval = (() => { try { return localStorage.getItem('rapidapi_key') ? 30000 : 60000; } catch(e) { return 60000; } })();
   dashboardRefreshTimer = setInterval(refreshLiveScore, interval);
 }
 
@@ -915,257 +714,6 @@ async function fetchLiveFromESPN() {
 }
 
 // ══════════════════════════════════════════════════════
-//  RENDER STATIC DATA
-// ══════════════════════════════════════════════════════
-
-function renderSchedule() {
-  const grid = document.getElementById('ipl-schedule-grid');
-  if (!grid) return;
-  grid.innerHTML = IPL2026_SCHEDULE.map(m => {
-    const isToday = m.status === 'today';
-    return `<div class="schedule-card ${isToday ? 'today-match' : 'upcoming'}">
-      <div class="sch-date">📅 ${m.date} • ${m.time} IST</div>
-      <div class="sch-teams">
-        <span class="sch-team">${m.t1}</span>
-        <span class="sch-vs">VS</span>
-        <span class="sch-team">${m.t2}</span>
-      </div>
-      <div class="sch-venue">📍 ${m.venue} • ${m.match}</div>
-      ${isToday
-        ? '<span class="sch-badge" style="background:#e74c3c;color:white">🔴 आज का मैच</span>'
-        : '<span class="sch-badge upcoming-badge">⏳ आने वाला</span>'}
-    </div>`;
-  }).join('');
-}
-
-function renderResults() {
-  const grid = document.getElementById('recent-results-grid');
-  if (!grid) return;
-  grid.innerHTML = IPL2026_RESULTS.map((m, idx) => `
-    <div class="schedule-card" style="border-left:4px solid #27ae60">
-      <div class="sch-date">📅 ${m.date} • ${m.match}</div>
-      <div class="sch-teams">
-        <span class="sch-team">${m.t1}</span><span class="sch-vs">VS</span><span class="sch-team">${m.t2}</span>
-      </div>
-      <div style="font-size:13px;margin:6px 0;line-height:1.9">
-        <div>🏏 ${m.t1}: <strong>${m.s1}</strong></div>
-        <div>🏏 ${m.t2}: <strong>${m.s2}</strong></div>
-      </div>
-      <div class="sch-venue">📍 ${m.venue}</div>
-      <div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:6px">🏆 ${m.result}</div>
-      <div style="font-size:12px;color:#888;margin-top:3px">⭐ MOM: ${m.mom}</div>
-      <button class="scorecard-btn" onclick="openScorecard(${idx})">📋 Full Scorecard देखें</button>
-    </div>`).join('');
-}
-
-// ── Scorecard Modal ──────────────────────────────────
-function openScorecard(idx) {
-  const m = IPL2026_RESULTS[idx];
-  const modal = document.getElementById('scorecard-modal');
-  const body  = document.getElementById('scorecard-modal-body');
-
-  function inningsHTML(inn) {
-    const batRows = inn.batting.map(b =>
-      `<tr><td>${b.name}</td><td style="color:#888;font-size:12px">${b.out}</td>
-       <td><strong>${b.r}</strong></td><td>${b.b}</td><td>${b.f}</td><td>${b.s}</td><td>${b.sr}</td></tr>`
-    ).join('');
-    const bowlRows = inn.bowling.map(b =>
-      `<tr><td>${b.name}</td><td>${b.o}</td><td>${b.m}</td><td>${b.r}</td><td><strong>${b.w}</strong></td><td>${b.eco}</td></tr>`
-    ).join('');
-    return `
-      <h4 style="color:#6c3483;margin:14px 0 8px">🏏 Batting — ${inn.team}</h4>
-      <div class="table-wrap">
-        <table class="scorecard-table">
-          <thead><tr><th>Batsman</th><th>Dismissal</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead>
-          <tbody>${batRows}</tbody>
-        </table>
-      </div>
-      <div style="font-size:12px;color:#888;margin:4px 0 10px">${inn.extras} &nbsp;|&nbsp; <strong>Total: ${inn.total}</strong></div>
-      <h4 style="color:#6c3483;margin:10px 0 8px">🎯 Bowling</h4>
-      <div class="table-wrap">
-        <table class="scorecard-table">
-          <thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Eco</th></tr></thead>
-          <tbody>${bowlRows}</tbody>
-        </table>
-      </div>`;
-  }
-
-  body.innerHTML = `
-    <div style="margin-bottom:14px">
-      <div style="font-size:18px;font-weight:bold;color:#1a1a2e">${m.t1} vs ${m.t2}</div>
-      <div style="font-size:13px;color:#888">📅 ${m.date} • ${m.match} • 📍 ${m.venue}</div>
-      <div style="margin-top:8px;display:flex;gap:16px;flex-wrap:wrap">
-        <div style="background:#f0e6ff;padding:8px 14px;border-radius:8px;font-size:13px">
-          🏏 ${m.t1}: <strong>${m.s1}</strong>
-        </div>
-        <div style="background:#eafaf1;padding:8px 14px;border-radius:8px;font-size:13px">
-          🏏 ${m.t2}: <strong>${m.s2}</strong>
-        </div>
-      </div>
-      <div style="margin-top:8px;font-size:14px;font-weight:bold;color:#27ae60">🏆 ${m.result}</div>
-      <div style="font-size:13px;color:#888">⭐ Player of the Match: <strong>${m.mom}</strong></div>
-    </div>
-    <hr style="border:1px solid #eee;margin:12px 0">
-    ${inningsHTML(m.inn1)}
-    <hr style="border:1px solid #eee;margin:12px 0">
-    ${inningsHTML(m.inn2)}`;
-
-  modal.style.display = 'flex';
-}
-
-function closeScorecard() {
-  document.getElementById('scorecard-modal').style.display = 'none';
-}
-
-function renderPoints() {
-  const tbody = document.getElementById('points-tbody') ||
-                document.querySelector('#sec-points .table-wrap table tbody');
-  if (!tbody) return;
-  tbody.innerHTML = IPL2026_POINTS.map(t => `
-    <tr class="${t.pos <= 4 ? 'qualify' : ''}">
-      <td>${t.pos}</td><td>${t.emoji} ${t.team}</td>
-      <td>${t.m}</td><td>${t.w}</td><td>${t.l}</td><td>${t.nr}</td>
-      <td><strong>${t.pts}</strong></td><td>${t.nrr}</td>
-    </tr>`).join('');
-}
-
-function renderBatsmen() {
-  const tbody = document.getElementById('top-batsmen-body');
-  if (!tbody) return;
-  tbody.innerHTML = IPL2026_BATSMEN.map(p => `
-    <tr>
-      <td>${p.pos}</td><td>${p.emoji} ${p.name}</td><td>${p.team}</td><td>${p.m}</td>
-      <td><strong>${p.runs}</strong></td><td>${p.hs}</td><td>${p.avg}</td><td>${p.sr}</td>
-      <td>${p.h}</td><td>${p.f}</td>
-    </tr>`).join('');
-}
-
-// ══════════════════════════════════════════════════════
-//  TAB SWITCHING
-// ══════════════════════════════════════════════════════
-
-function switchSection(name, btn) {
-  document.querySelectorAll('.sec-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.sec-panel').forEach(p => p.classList.add('hidden'));
-  document.getElementById('sec-' + name).classList.remove('hidden');
-}
-
-function switchInnings(id, btn) {
-  document.querySelectorAll('.sc-tab').forEach(t => t.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.scorecard').forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function showComm(idx, btn) {
-  document.querySelectorAll('.comm-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  // Fix: only target commentary list divs, not the modal (which also starts with "comm-")
-  document.querySelectorAll('.commentary-list[id^="comm-"]').forEach(c => c.classList.add('hidden'));
-  document.getElementById('comm-' + idx).classList.remove('hidden');
-}
-
-// ══════════════════════════════════════════════════════
-//  API KEY BOX
-// ══════════════════════════════════════════════════════
-
-function showApiBox() {
-  const box = document.getElementById('api-setup');
-  box.style.display = (box.style.display === 'none' || !box.style.display) ? 'block' : 'none';
-}
-
-function saveApiKey() {
-  const key = document.getElementById('api-key-input').value.trim();
-  const msg = document.getElementById('api-save-msg');
-  if (!key) { msg.style.color = '#e74c3c'; msg.textContent = '⚠️ Key डालें।'; return; }
-  localStorage.setItem('rapidapi_key', key);
-  msg.style.color = '#27ae60';
-  msg.textContent = '✅ Key सेव हो गई! अब Cricbuzz से लाइव डेटा मिलेगा।';
-  // Restart refresh with faster 30s interval now that we have a key
-  clearInterval(dashboardRefreshTimer);
-  dashboardRefreshTimer = setInterval(refreshLiveScore, 30000);
-  refreshLiveScore(); // immediate fetch with new key
-  setTimeout(() => { document.getElementById('api-setup').style.display = 'none'; }, 1500);
-}
-
-// ══════════════════════════════════════════════════════
-//  PAGE LOAD
-// ══════════════════════════════════════════════════════
-
-window.addEventListener('DOMContentLoaded', () => {
-  // 1. Render all static data immediately
-  renderSchedule();
-  renderResults();
-  renderPoints();
-  renderBatsmen();
-  // Load news from JSON
-  loadNewsFromJSON();
-
-  // 2. DateTime
-  updateDateTime();
-  setInterval(updateDateTime, 60000);
-
-  // 3. Restore API key
-  const savedKey = localStorage.getItem('rapidapi_key');
-  if (savedKey) {
-    document.getElementById('api-key-input').value = savedKey;
-    document.getElementById('api-setup').style.display = 'none';
-  }
-
-  // 4. Fetch ESPN/TOI live data
-  fetchLiveFromESPN();
-  startLiveRefresh();
-  startDashboardRefresh();
-
-  // 5. Newsletter — replace alert with inline confirmation
-  document.querySelector('.newsletter button').addEventListener('click', () => {
-    const input = document.querySelector('.newsletter input');
-    const btn   = document.querySelector('.newsletter button');
-    if (input.value.includes('@')) {
-      btn.textContent = '✅ सब्सक्राइब!';
-      btn.style.background = '#27ae60';
-      btn.disabled = true;
-      input.value = '';
-      setTimeout(() => {
-        btn.textContent = 'सब्सक्राइब';
-        btn.style.background = '';
-        btn.disabled = false;
-      }, 3000);
-    } else {
-      input.style.border = '2px solid #e74c3c';
-      input.placeholder = '⚠️ वैध ईमेल डालें';
-      setTimeout(() => {
-        input.style.border = '';
-        input.placeholder = 'आपका ईमेल';
-      }, 2000);
-    }
-  });
-
-  // 6. Fix: wire up search input with addEventListener instead of inline oninput
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', () => searchNews(searchInput.value));
-  }
-
-  // 7. Init poll state from localStorage
-  initPoll();
-
-  // 8. Keyboard: close modals with Escape key
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      closeScorecard();
-      closeCommentary();
-    }
-  });
-});
-
-function updateDateTime() {
-  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' };
-  document.getElementById('datetime').textContent = new Date().toLocaleDateString('hi-IN', opts);
-}
-
-// ══════════════════════════════════════════════════════
 //  LOAD NEWS FROM news.json — with pagination & error state
 // ══════════════════════════════════════════════════════
 
@@ -1288,20 +836,30 @@ function showWeather(city, btn) {
 // ══════════════════════════════════════════════════════
 
 // Fix: load saved votes from localStorage, fall back to defaults
+// Wrapped in try/catch — localStorage can throw in private/restricted contexts
 const DEFAULT_VOTES = [120, 95, 60, 45];
-const pollVotes = JSON.parse(localStorage.getItem('poll_votes') || 'null') || [...DEFAULT_VOTES];
+let pollVotes;
+try {
+  pollVotes = JSON.parse(localStorage.getItem('poll_votes') || 'null') || [...DEFAULT_VOTES];
+} catch(e) {
+  pollVotes = [...DEFAULT_VOTES];
+}
 
 function vote(index) {
   // Prevent double-voting
-  if (localStorage.getItem('poll_voted')) {
+  let alreadyVoted = false;
+  try { alreadyVoted = !!localStorage.getItem('poll_voted'); } catch(e) {}
+  if (alreadyVoted) {
     document.getElementById('poll-options').classList.add('hidden');
     document.getElementById('poll-results').classList.remove('hidden');
     renderPollResults();
     return;
   }
   pollVotes[index]++;
-  localStorage.setItem('poll_votes', JSON.stringify(pollVotes));
-  localStorage.setItem('poll_voted', '1');
+  try {
+    localStorage.setItem('poll_votes', JSON.stringify(pollVotes));
+    localStorage.setItem('poll_voted', '1');
+  } catch(e) {}
   document.getElementById('poll-options').classList.add('hidden');
   document.getElementById('poll-results').classList.remove('hidden');
   renderPollResults();
@@ -1319,9 +877,270 @@ function renderPollResults() {
 
 // On load: if already voted, show results
 function initPoll() {
-  if (localStorage.getItem('poll_voted')) {
+  let voted = false;
+  try { voted = !!localStorage.getItem('poll_voted'); } catch(e) {}
+  if (voted) {
     document.getElementById('poll-options').classList.add('hidden');
     document.getElementById('poll-results').classList.remove('hidden');
     renderPollResults();
   }
+}
+
+// ══════════════════════════════════════════════════════
+//  RENDER STATIC DATA
+// ══════════════════════════════════════════════════════
+
+function renderSchedule() {
+  const grid = document.getElementById('ipl-schedule-grid');
+  if (!grid) return;
+  grid.innerHTML = IPL2026_SCHEDULE.map(m => {
+    const isToday   = m.status === 'today';
+    const isDone    = m.status === 'done';
+    const isFinal   = m.match.includes('FINAL');
+    return `<div class="schedule-card ${isToday ? 'today-match' : isDone ? '' : 'upcoming'}">
+      <div class="sch-date">📅 ${m.date} • ${m.time} IST</div>
+      <div class="sch-teams">
+        <span class="sch-team">${m.t1}</span>
+        <span class="sch-vs">VS</span>
+        <span class="sch-team">${m.t2}</span>
+      </div>
+      <div class="sch-venue">📍 ${m.venue} • ${m.match}</div>
+      ${isToday
+        ? '<span class="sch-badge" style="background:#e74c3c;color:white">🔴 आज का मैच</span>'
+        : isDone
+          ? '<span class="sch-badge" style="background:#27ae60;color:white">✅ समाप्त</span>'
+          : isFinal
+            ? '<span class="sch-badge final-badge">🏆 GRAND FINAL</span>'
+            : '<span class="sch-badge upcoming-badge">⏳ आने वाला</span>'}
+    </div>`;
+  }).join('');
+}
+
+function renderResults() {
+  const grid = document.getElementById('recent-results-grid');
+  if (!grid) return;
+  grid.innerHTML = IPL2026_RESULTS.map((m, idx) => `
+    <div class="schedule-card" style="border-left:4px solid #27ae60">
+      <div class="sch-date">📅 ${m.date} • ${m.match}</div>
+      <div class="sch-teams">
+        <span class="sch-team">${m.t1}</span><span class="sch-vs">VS</span><span class="sch-team">${m.t2}</span>
+      </div>
+      <div style="font-size:13px;margin:6px 0;line-height:1.9">
+        <div>🏏 ${m.t1}: <strong>${m.s1}</strong></div>
+        <div>🏏 ${m.t2}: <strong>${m.s2}</strong></div>
+      </div>
+      <div class="sch-venue">📍 ${m.venue}</div>
+      <div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:6px">🏆 ${m.result}</div>
+      <div style="font-size:12px;color:#888;margin-top:3px">⭐ MOM: ${m.mom}</div>
+      <button class="scorecard-btn" onclick="openScorecard(${idx})">📋 Full Scorecard देखें</button>
+    </div>`).join('');
+}
+
+// ── Scorecard Modal ──────────────────────────────────
+function openScorecard(idx) {
+  const m     = IPL2026_RESULTS[idx];
+  const modal = document.getElementById('scorecard-modal');
+  const body  = document.getElementById('scorecard-modal-body');
+
+  function inningsHTML(inn) {
+    const batRows = inn.batting.map(b =>
+      `<tr><td>${b.name}</td><td style="color:#888;font-size:12px">${b.out}</td>
+       <td><strong>${b.r}</strong></td><td>${b.b}</td><td>${b.f}</td><td>${b.s}</td><td>${b.sr}</td></tr>`
+    ).join('');
+    const bowlRows = inn.bowling.map(b =>
+      `<tr><td>${b.name}</td><td>${b.o}</td><td>${b.m}</td><td>${b.r}</td><td><strong>${b.w}</strong></td><td>${b.eco}</td></tr>`
+    ).join('');
+    return `
+      <h4 style="color:#6c3483;margin:14px 0 8px">🏏 Batting — ${inn.team}</h4>
+      <div class="table-wrap">
+        <table class="scorecard-table">
+          <thead><tr><th>Batsman</th><th>Dismissal</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th></tr></thead>
+          <tbody>${batRows}</tbody>
+        </table>
+      </div>
+      <div style="font-size:12px;color:#888;margin:4px 0 10px">${inn.extras} &nbsp;|&nbsp; <strong>Total: ${inn.total}</strong></div>
+      <h4 style="color:#6c3483;margin:10px 0 8px">🎯 Bowling</h4>
+      <div class="table-wrap">
+        <table class="scorecard-table">
+          <thead><tr><th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Eco</th></tr></thead>
+          <tbody>${bowlRows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  body.innerHTML = `
+    <div style="margin-bottom:14px">
+      <div style="font-size:18px;font-weight:bold;color:#1a1a2e">${m.t1} vs ${m.t2}</div>
+      <div style="font-size:13px;color:#888">📅 ${m.date} • ${m.match} • 📍 ${m.venue}</div>
+      <div style="margin-top:8px;display:flex;gap:16px;flex-wrap:wrap">
+        <div style="background:#f0e6ff;padding:8px 14px;border-radius:8px;font-size:13px">
+          🏏 ${m.t1}: <strong>${m.s1}</strong>
+        </div>
+        <div style="background:#eafaf1;padding:8px 14px;border-radius:8px;font-size:13px">
+          🏏 ${m.t2}: <strong>${m.s2}</strong>
+        </div>
+      </div>
+      <div style="margin-top:8px;font-size:14px;font-weight:bold;color:#27ae60">🏆 ${m.result}</div>
+      <div style="font-size:13px;color:#888">⭐ Player of the Match: <strong>${m.mom}</strong></div>
+    </div>
+    <hr style="border:1px solid #eee;margin:12px 0">
+    ${inningsHTML(m.inn1)}
+    <hr style="border:1px solid #eee;margin:12px 0">
+    ${inningsHTML(m.inn2)}`;
+
+  modal.style.display = 'flex';
+}
+
+function closeScorecard() {
+  document.getElementById('scorecard-modal').style.display = 'none';
+}
+
+function renderPoints() {
+  const tbody = document.getElementById('points-tbody') ||
+                document.querySelector('#sec-points .table-wrap table tbody');
+  if (!tbody) return;
+  tbody.innerHTML = IPL2026_POINTS.map(t => `
+    <tr class="${t.pos <= 4 ? 'qualify' : ''}">
+      <td>${t.pos}</td><td>${t.emoji} ${t.team}</td>
+      <td>${t.m}</td><td>${t.w}</td><td>${t.l}</td><td>${t.nr}</td>
+      <td><strong>${t.pts}</strong></td><td>${t.nrr}</td>
+    </tr>`).join('');
+}
+
+function renderBatsmen() {
+  const tbody = document.getElementById('top-batsmen-body');
+  if (!tbody) return;
+  tbody.innerHTML = IPL2026_BATSMEN.map(p => `
+    <tr>
+      <td>${p.pos}</td><td>${p.emoji} ${p.name}</td><td>${p.team}</td><td>${p.m}</td>
+      <td><strong>${p.runs}</strong></td><td>${p.hs}</td><td>${p.avg}</td><td>${p.sr}</td>
+      <td>${p.h}</td><td>${p.f}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ══════════════════════════════════════════════════════
+
+function switchSection(name, btn) {
+  document.querySelectorAll('.sec-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.sec-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById('sec-' + name).classList.remove('hidden');
+}
+
+function switchInnings(id, btn) {
+  document.querySelectorAll('.sc-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.scorecard').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function showComm(idx, btn) {
+  document.querySelectorAll('.comm-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  // Only target commentary list divs, not the modal
+  document.querySelectorAll('.commentary-list[id^="comm-"]').forEach(c => c.classList.add('hidden'));
+  document.getElementById('comm-' + idx).classList.remove('hidden');
+}
+
+// ══════════════════════════════════════════════════════
+//  API KEY BOX
+// ══════════════════════════════════════════════════════
+
+function showApiBox() {
+  const box = document.getElementById('api-setup');
+  box.style.display = (box.style.display === 'none' || !box.style.display) ? 'block' : 'none';
+}
+
+function saveApiKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  const msg = document.getElementById('api-save-msg');
+  if (!key) { msg.style.color = '#e74c3c'; msg.textContent = '⚠️ Key डालें।'; return; }
+  try { localStorage.setItem('rapidapi_key', key); } catch(e) {}
+  msg.style.color = '#27ae60';
+  msg.textContent = '✅ Key सेव हो गई! अब Cricbuzz से लाइव डेटा मिलेगा।';
+  clearInterval(dashboardRefreshTimer);
+  dashboardRefreshTimer = setInterval(refreshLiveScore, 30000);
+  refreshLiveScore();
+  setTimeout(() => { document.getElementById('api-setup').style.display = 'none'; }, 1500);
+}
+
+// ══════════════════════════════════════════════════════
+//  PAGE LOAD
+// ══════════════════════════════════════════════════════
+
+window.addEventListener('DOMContentLoaded', () => {
+  // 1. Render all static data immediately
+  renderSchedule();
+  renderResults();
+  renderPoints();
+  renderBatsmen();
+
+  // 2. Load news from JSON
+  loadNewsFromJSON();
+
+  // 3. DateTime
+  updateDateTime();
+  setInterval(updateDateTime, 60000);
+
+  // 4. Restore API key
+  try {
+    const savedKey = localStorage.getItem('rapidapi_key');
+    if (savedKey) {
+      document.getElementById('api-key-input').value = savedKey;
+      document.getElementById('api-setup').style.display = 'none';
+    }
+  } catch(e) {}
+
+  // 5. Fetch ESPN/TOI live data
+  fetchLiveFromESPN();
+  startLiveRefresh();
+  startDashboardRefresh();
+
+  // 6. Newsletter — inline confirmation
+  document.querySelector('.newsletter button').addEventListener('click', () => {
+    const input = document.querySelector('.newsletter input');
+    const btn   = document.querySelector('.newsletter button');
+    if (input.value.includes('@')) {
+      btn.textContent = '✅ सब्सक्राइब!';
+      btn.style.background = '#27ae60';
+      btn.disabled = true;
+      input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'सब्सक्राइब';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3000);
+    } else {
+      input.style.border = '2px solid #e74c3c';
+      input.placeholder = '⚠️ वैध ईमेल डालें';
+      setTimeout(() => {
+        input.style.border = '';
+        input.placeholder = 'आपका ईमेल';
+      }, 2000);
+    }
+  });
+
+  // 7. Search input
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => searchNews(searchInput.value));
+  }
+
+  // 8. Poll
+  initPoll();
+
+  // 9. Escape key closes modals
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeScorecard();
+      closeCommentary();
+    }
+  });
+});
+
+function updateDateTime() {
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' };
+  document.getElementById('datetime').textContent = new Date().toLocaleDateString('hi-IN', opts);
 }
