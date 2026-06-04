@@ -10,37 +10,50 @@
   <meta property="og:description" content="सच की आवाज़, हर पल — हिंदी में। ताज़ा खबरें और IPL 2026 लाइव अपडेट।"/>
   <meta property="og:type" content="website"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
   <!-- Top Bar -->
   <div class="topbar">
-    <span id="datetime"></span>
-    <span>📞 संपर्क: news@hindinewssamachar.in</span>
+    <div class="topbar-left">
+      <span class="topbar-date" id="datetime"></span>
+    </div>
+    <div class="topbar-right">
+      <a href="#">📘 Facebook</a>
+      <a href="#">🐦 Twitter</a>
+      <a href="#">📸 Instagram</a>
+      <span>📞 news@hindinewssamachar.in</span>
+    </div>
   </div>
 
   <!-- Header -->
   <header>
     <div class="logo">
-      <h1>📺 Hindi News <span class="brand-sub">(SAMACHAR)</span></h1>
-      <p>सच की आवाज़, हर पल — हिंदी में</p>
+      <div class="logo-icon">📺</div>
+      <div class="logo-text">
+        <h1>Hindi News <span class="brand-sub">SAMACHAR</span></h1>
+        <p>सच की आवाज़, हर पल — हिंदी में</p>
+      </div>
     </div>
     <nav>
-      <a href="#home">होम</a>
-      <a href="#rashtriya">राष्ट्रीय</a>
-      <a href="#rajniti">राजनीति</a>
-      <a href="#khel">खेल</a>
-      <a href="#manoranjan">मनोरंजन</a>
-      <a href="#technology">तकनीक</a>
-      <a href="#business">व्यापार</a>
+      <a href="#home">🏠 होम</a>
+      <a href="#rashtriya">🇮🇳 राष्ट्रीय</a>
+      <a href="#rajniti">🏛️ राजनीति</a>
+      <a href="#khel">🏏 खेल</a>
+      <a href="#manoranjan">🎬 मनोरंजन</a>
+      <a href="#technology">💻 तकनीक</a>
+      <a href="#business">📈 व्यापार</a>
     </nav>
   </header>
 
   <!-- Search Bar -->
   <div class="search-bar-wrap">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="🔍 समाचार खोजें... (जैसे: क्रिकेट, दिल्ली, बजट)" aria-label="समाचार खोजें"/>
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="समाचार खोजें... (जैसे: क्रिकेट, दिल्ली, बजट)" aria-label="समाचार खोजें"/>
       <button onclick="searchNews(document.getElementById('searchInput').value)" aria-label="खोजें">खोजें</button>
       <button class="clear-btn" onclick="clearSearch()" aria-label="खोज साफ करें">✕</button>
     </div>
@@ -49,10 +62,10 @@
 
   <!-- Breaking News Ticker -->
   <div class="breaking-news">
-    <span class="breaking-label">🔴 ब्रेकिंग न्यूज़</span>
+    <span class="breaking-label"><span class="blink-dot"></span> ब्रेकिंग</span>
     <div class="ticker-wrap">
       <div class="ticker">
-        <span>प्रधानमंत्री ने नई योजना का किया ऐलान &nbsp;|&nbsp; भारत ने जीता क्रिकेट मैच &nbsp;|&nbsp; शेयर बाजार में उछाल, सेंसेक्स 500 अंक ऊपर &nbsp;|&nbsp; मौसम विभाग ने जारी किया अलर्ट &nbsp;|&nbsp; बॉलीवुड की नई फिल्म ने तोड़े रिकॉर्ड &nbsp;|&nbsp; नई शिक्षा नीति पर सरकार का बड़ा फैसला</span>
+        <span>🏆 IPL 2026 Final कल — RCB vs GT, 31 May, Narendra Modi Stadium &nbsp;|&nbsp; Shubman Gill का शतक — GT Final में &nbsp;|&nbsp; Sooryavanshi ने Eliminator में जड़े 97 रन (29 balls) &nbsp;|&nbsp; RCB ने Q1 में GT को 92 रन से हराया &nbsp;|&nbsp; प्रधानमंत्री ने नई योजना का किया ऐलान &nbsp;|&nbsp; शेयर बाजार में उछाल, सेंसेक्स 500 अंक ऊपर</span>
       </div>
     </div>
   </div>
@@ -60,38 +73,67 @@
   <!-- Main Content -->
   <main id="home">
 
+    <!-- IPL FINAL BANNER -->
+    <div class="ipl-final-banner">
+      <div class="final-banner-inner">
+        <div class="final-teams">
+          <div class="final-team">
+            <span class="team-emoji">🔴</span>
+            <span class="team-short">RCB</span>
+            <span class="team-full">Royal Challengers Bengaluru</span>
+          </div>
+          <div class="final-center">
+            <div class="final-vs">VS</div>
+            <div class="final-info">
+              <div class="final-title">🏆 IPL 2026 GRAND FINAL</div>
+              <div class="final-date">📅 31 May 2026 • 7:30 PM IST</div>
+              <div class="final-venue">📍 Narendra Modi Stadium, Ahmedabad</div>
+            </div>
+          </div>
+          <div class="final-team right">
+            <span class="team-emoji">🔵</span>
+            <span class="team-short">GT</span>
+            <span class="team-full">Gujarat Titans</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Featured News -->
     <section class="featured">
       <div class="featured-main">
-        <img src="https://picsum.photos/seed/india1/800/450" alt="मुख्य समाचार"/>
+        <img src="https://picsum.photos/seed/india1/800/450" alt="मुख्य समाचार" loading="lazy"/>
         <div class="featured-overlay">
-          <span class="category-tag">राष्ट्रीय</span>
+          <span class="category-tag">🇮🇳 राष्ट्रीय</span>
           <h2>भारत की अर्थव्यवस्था विश्व में तीसरे स्थान पर पहुंचने की ओर अग्रसर</h2>
           <p>नई दिल्ली: देश की जीडीपी वृद्धि दर ने सभी अनुमानों को पार किया, विशेषज्ञों ने जताई खुशी...</p>
-          <span class="news-time">⏰ 2 घंटे पहले</span>
+          <div class="featured-meta">
+            <span class="news-time">⏰ 2 घंटे पहले</span>
+            <span class="read-more-btn">पूरी खबर →</span>
+          </div>
         </div>
       </div>
       <div class="featured-side">
         <div class="side-card">
-          <img src="https://picsum.photos/seed/cricket/300/180" alt="खेल"/>
-          <div>
-            <span class="category-tag green">खेल</span>
+          <img src="https://picsum.photos/seed/cricket/300/180" alt="खेल" loading="lazy"/>
+          <div class="side-card-body">
+            <span class="category-tag green">🏏 खेल</span>
             <h4>टीम इंडिया ने ऑस्ट्रेलिया को 5 विकेट से हराया</h4>
             <span class="news-time">⏰ 1 घंटे पहले</span>
           </div>
         </div>
         <div class="side-card">
-          <img src="https://picsum.photos/seed/bollywood/300/180" alt="मनोरंजन"/>
-          <div>
-            <span class="category-tag orange">मनोरंजन</span>
+          <img src="https://picsum.photos/seed/bollywood/300/180" alt="मनोरंजन" loading="lazy"/>
+          <div class="side-card-body">
+            <span class="category-tag orange">🎬 मनोरंजन</span>
             <h4>बॉलीवुड की बहुप्रतीक्षित फिल्म ने पहले दिन कमाए 50 करोड़</h4>
             <span class="news-time">⏰ 3 घंटे पहले</span>
           </div>
         </div>
         <div class="side-card">
-          <img src="https://picsum.photos/seed/tech2024/300/180" alt="तकनीक"/>
-          <div>
-            <span class="category-tag purple">तकनीक</span>
+          <img src="https://picsum.photos/seed/tech2024/300/180" alt="तकनीक" loading="lazy"/>
+          <div class="side-card-body">
+            <span class="category-tag purple">💻 तकनीक</span>
             <h4>भारत में लॉन्च हुआ नया AI स्टार्टअप, मिला 1000 करोड़ का निवेश</h4>
             <span class="news-time">⏰ 4 घंटे पहले</span>
           </div>
